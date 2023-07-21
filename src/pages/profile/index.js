@@ -46,7 +46,7 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
                       height={250}
                       alt="..."
                     />
-                    <div className="flex my-8">
+                    <div className="flex">
                       {/* <div>{nickname}SOnnyson</div>
                       <div>{level}Level </div> */}
                     </div>

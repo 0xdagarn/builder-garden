@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Router from "next/router";
 
-import { ethers } from "ethers";
 import { useAccount } from "wagmi";
 import {
   usePrepareContractWrite,
@@ -34,10 +33,12 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
                     <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
                       Congratulations!
                     </div>
-                    <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
-                      {position === "builder"
+                    <div className="flex items-center justify-center flex-col text-var-brown font-feature-settings-0 text-xl leading-snug px-5 my-5">
+                      {"You've created a builder profile on BuilderGarden!"}
+                      <br /> Excited to see how you grow as a bulilder
+                      {/* {position === "builder"
                         ? "You've created a builder profile on BuilderGarden! Excited to see how you grow as a bulilder"
-                        : "Backer!"}
+                        : "Backer!"} */}
                     </div>
                     <Image
                       src="/builder.png"
@@ -45,9 +46,9 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
                       height={250}
                       alt="..."
                     />
-                    <div className="flex">
-                      <div>{nickname}SOnnyson</div>
-                      <div>{level}Level </div>
+                    <div className="flex my-8">
+                      {/* <div>{nickname}SOnnyson</div>
+                      <div>{level}Level </div> */}
                     </div>
 
                     <div className="flex items-center justify-center">
@@ -128,197 +129,205 @@ export default function Profile() {
   };
 
   return (
-    <div>
-      <Modal
-        isOpenModal={isOpenModal}
-        nickname={nickname}
-        level={level}
-        position={position}
-      />
+    <div
+      style={{
+        background: "#f7ebe2",
+        padding: "32px",
+        minHeight: "100vh",
+      }}
+    >
+      <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
+        <Modal
+          isOpenModal={isOpenModal}
+          nickname={nickname}
+          level={level}
+          position={position}
+        />
 
-      <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
-        Choose Your Wallet
-      </div>
-      <div className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed">
-        {`Roles can't be changed in the current version`}
-      </div>
+        <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
+          Create profile
+        </div>
+        <div className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed">
+          {`Roles can't be changed in the current version`}
+        </div>
 
-      <div className="flex">
-        <div
-          className={`flex-1 rounded-full text-center text-base font-bold leading-6 p-4 border-2
+        <div className="flex gap-10 mt-4 mb-12">
+          <div
+            className={`flex-1 rounded-full text-center text-base font-bold leading-6 p-4 border-2
         ${
           position === "builder"
             ? "bg-green-800 text-white border-white"
             : "bg-white-800 text-green-800 border-green-800"
         }`}
-          onClick={() => setPosition("builder")}
-        >
-          Builder
-        </div>
-        <div
-          className={`flex-1 rounded-full text-center text-base font-bold leading-6 p-4 border-2
+            onClick={() => setPosition("builder")}
+          >
+            Builder
+          </div>
+          <div
+            className={`flex-1 rounded-full text-center text-base font-bold leading-6 p-4 border-2
         ${
           position === "backer"
             ? "bg-green-800 text-white border-white"
             : "bg-white-800 text-green-800 border-green-800"
         }`}
-          onClick={() => setPosition("backer")}
-        >
-          Backer
+            onClick={() => setPosition("backer")}
+          >
+            Backer
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
-          Information
-        </div>
-        <div className="flex">
-          <div className="flex-1">
-            <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
-              General
-            </div>
-            <label
-              htmlFor="address"
-              className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-            >
-              Wallet address
-            </label>
-            <input
-              type="text"
-              id="address"
-              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
-              value={address}
-              disabled
-            />
-            <label
-              htmlFor="nickname"
-              className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-            >
-              Nickname
-            </label>
-            <input
-              type="text"
-              id="nickname"
-              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
-              onChange={(e) => setNickname(e.target.value)}
-            />
-            <div className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed">
-              Role
-            </div>
-            <select
-              id="small"
-              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option value="">Choose your role</option>
-              <option value="developer">Developer</option>
-              <option value="designer">Designer</option>
-            </select>
-            <div className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed">
-              Your interesting
-            </div>
-            <select
-              id="small"
-              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              onChange={(e) => setInteresting(e.target.value)}
-            >
-              <option value="">Choose your interesting</option>
-              <option value="Infrastructure">Infrastructure</option>
-              <option value="DeFi">DeFi</option>
-              <option value="NFT">NFT</option>
-              <option value="DAO">DAO</option>
-              <option value="Social">Social</option>
-            </select>
+        <div className="mb-12">
+          <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
+            Information
           </div>
-          <div className="flex-1">
-            <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
-              Socials
+          <div className="flex gap-10 mb-4">
+            <div className="flex-1">
+              <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
+                General
+              </div>
+              <label
+                htmlFor="address"
+                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+              >
+                Wallet address
+              </label>
+              <input
+                type="text"
+                id="address"
+                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                value={address}
+                disabled
+              />
+              <label
+                htmlFor="nickname"
+                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+              >
+                Nickname
+              </label>
+              <input
+                type="text"
+                id="nickname"
+                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                onChange={(e) => setNickname(e.target.value)}
+              />
+              <div className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed">
+                Role
+              </div>
+              <select
+                id="small"
+                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="">Choose your role</option>
+                <option value="developer">Developer</option>
+                <option value="designer">Designer</option>
+              </select>
+              <div className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed">
+                Your interesting
+              </div>
+              <select
+                id="small"
+                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                onChange={(e) => setInteresting(e.target.value)}
+              >
+                <option value="">Choose your interesting</option>
+                <option value="Infrastructure">Infrastructure</option>
+                <option value="DeFi">DeFi</option>
+                <option value="NFT">NFT</option>
+                <option value="DAO">DAO</option>
+                <option value="Social">Social</option>
+              </select>
             </div>
-            <label
-              htmlFor="discord"
-              className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-            >
-              Discord handle
-            </label>
-            <input
-              type="text"
-              id="discord"
-              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
-              onChange={(e) => setDiscord(e.target.value)}
-              placeholder="Builder#1234"
-            />
-            <label
-              htmlFor="twitter"
-              className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-            >
-              Twitter handle
-            </label>
-            <input
-              type="text"
-              id="twitter"
-              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
-              onChange={(e) => setTwitter(e.target.value)}
-              placeholder="@Builder"
-            />
+            <div className="flex-1">
+              <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
+                Socials
+              </div>
+              <label
+                htmlFor="discord"
+                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+              >
+                Discord handle
+              </label>
+              <input
+                type="text"
+                id="discord"
+                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                onChange={(e) => setDiscord(e.target.value)}
+                placeholder="Builder#1234"
+              />
+              <label
+                htmlFor="twitter"
+                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+              >
+                Twitter handle
+              </label>
+              <input
+                type="text"
+                id="twitter"
+                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                onChange={(e) => setTwitter(e.target.value)}
+                placeholder="@Builder"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div>
-        <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
-          Proof of yourself
-        </div>
-        <div className="flex">
-          <div className="flex-1">
-            <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
-              Proof of work
-            </div>
-            <label
-              htmlFor="github"
-              className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-            >
-              Github
-            </label>
-            <input
-              type="text"
-              id="github"
-              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
-              onChange={(e) => setGithub(e.target.value)}
-            />
-            <label
-              htmlFor="portfolio"
-              className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-            >
-              Portfolio (Optional)
-            </label>
-            <input
-              type="text"
-              id="portfoli"
-              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
-              onChange={(e) => setPortfolio(e.target.value)}
-            />
+        <div>
+          <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
+            Proof of yourself
           </div>
-          <div className="flex-1">
-            <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
-              Sismo!!
+          <div className="flex gap-10">
+            <div className="flex-1">
+              <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
+                Proof of work
+              </div>
+              <label
+                htmlFor="github"
+                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+              >
+                Github
+              </label>
+              <input
+                type="text"
+                id="github"
+                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                onChange={(e) => setGithub(e.target.value)}
+              />
+              <label
+                htmlFor="portfolio"
+                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+              >
+                Portfolio (Optional)
+              </label>
+              <input
+                type="text"
+                id="portfoli"
+                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                onChange={(e) => setPortfolio(e.target.value)}
+              />
+            </div>
+            <div className="flex-1">
+              <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
+                Sismo!!
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex items-center justify-center">
-        <button
-          className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
-          onClick={() => create()}
-        >
-          Create an ERC6551 Account
-        </button>
+        <div className="flex items-center justify-center mt-8">
+          <button
+            className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
+            onClick={() => create()}
+          >
+            Create an ERC6551 Account
+          </button>
+        </div>
       </div>
     </div>
   );

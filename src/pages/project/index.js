@@ -12,7 +12,7 @@ const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 const Modal = ({ isOpenModal, nickname, level, position }) => {
   return (
     <div>
-      {!isOpenModal && (
+      {isOpenModal && (
         <div>
           <div
             className="relative z-10"
@@ -84,95 +84,104 @@ export default function Project() {
   }, [isSuccess]);
 
   return (
-    <div>
+    <div
+      style={{
+        background: "#f7ebe2",
+        padding: "32px",
+        minHeight: "100vh",
+      }}
+    >
       <Modal />
 
-      <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
-        Choose Project
-      </div>
+      <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
+        <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
+          Create your project
+        </div>
 
-      <label
-        htmlFor="hacakthon"
-        className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-      >
-        Hackathon
-      </label>
-      <input
-        type="text"
-        id="hacakthon"
-        className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        required
-        value="ETH GLOBAL PARIS 🇫🇷"
-        disabled
-      />
-      <label
-        htmlFor="max"
-        className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-      >
-        Max Amount
-      </label>
-      <input
-        type="text"
-        id="max"
-        className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        required
-        value="1 ETH ♦️"
-        disabled
-      />
-      <label
-        htmlFor="unit"
-        className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-      >
-        Funding Unit
-      </label>
-      <input
-        type="text"
-        id="unit"
-        className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        required
-        value="0.05 ETH ♦️"
-        disabled
-      />
-
-      <label
-        htmlFor="title"
-        className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-      >
-        Project title
-      </label>
-      <input
-        type="text"
-        id="title"
-        className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        required
-        onChange={(e) => setTitle(e.target.value)}
-      />
-
-      <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
-        Tell us your hacakthon story
-      </div>
-      <div
-        className="text-var-brown font-feature-settings-0 text-base font-normal
-        leading-relaxed"
-      >
-        Include the reason why you want to participate in the hackathon and how
-        you would be using the funding round.
-      </div>
-      <input
-        type="text"
-        id="title"
-        className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        required
-        onChange={(e) => setTitle(e.target.value)}
-      />
-
-      <div className="flex items-center justify-center">
-        <button
-          className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
-          onClick={() => create()}
+        <label
+          htmlFor="hacakthon"
+          className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
         >
-          Submit
-        </button>
+          Hackathon
+        </label>
+        <input
+          type="text"
+          id="hacakthon"
+          className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
+          value="ETH GLOBAL PARIS 🇫🇷"
+          disabled
+        />
+        <label
+          htmlFor="max"
+          className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+        >
+          Max Amount
+        </label>
+        <input
+          type="text"
+          id="max"
+          className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
+          value="1 ETH ♦️"
+          disabled
+        />
+        <label
+          htmlFor="unit"
+          className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+        >
+          Funding Unit
+        </label>
+        <input
+          type="text"
+          id="unit"
+          className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
+          value="0.05 ETH ♦️"
+          disabled
+        />
+
+        <label
+          htmlFor="title"
+          className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed mt-4"
+        >
+          Project title
+        </label>
+        <input
+          type="text"
+          id="title"
+          className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <div className="my-8">
+          <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
+            Tell us your hacakthon story
+          </div>
+          <div
+            className="text-var-brown font-feature-settings-0 text-base font-normal
+        leading-relaxed"
+          >
+            Include the reason why you want to participate in the hackathon and
+            how you would be using the funding round.
+          </div>
+
+          <input
+            type="text"
+            id="title"
+            className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            required
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="flex items-center justify-center">
+          <button
+            className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
+            onClick={() => create()}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -2,8 +2,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Router from "next/router";
+import { randomBytes } from "crypto";
+import { BN, ecsign, keccakFromString, toRpcSig } from "ethereumjs-util";
+import * as secp256k1 from "secp256k1";
 
-import { useAccount } from "wagmi";
+import { useAccount, useSignMessage } from "wagmi";
 import {
   usePrepareContractWrite,
   useContractWrite,
@@ -93,6 +96,10 @@ export default function Profile() {
   const [level, setLevel] = useState("");
   const [responseBytes, setResponseBytes] = useState("");
 
+  const [message, setMessage] = useState("");
+  const [privKey, setPrivKey] = useState("");
+  const [pubKey, setPubKey] = useState("");
+
   // const { config } = usePrepareContractWrite({
   //   address: builderGardenAddress,
   //   abi: builderGardenABI,
@@ -127,6 +134,150 @@ export default function Profile() {
   const { isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
+
+  const {
+    data: signature,
+    isError,
+    isLoading,
+    signMessage,
+  } = useSignMessage({
+    message,
+  });
+
+  async function personalSign(message, privateKey) {
+    const messageHash = keccakFromString(
+      `\x19Ethereum Signed Message:\n${message.length}${message}`,
+      256
+    );
+    const signature = ecsign(messageHash, privateKey);
+    return Buffer.from(
+      toRpcSig(signature.v, signature.r, signature.s).slice(2),
+      "hex"
+    );
+  }
+
+  const verifyIdentity = async () => {
+    const msg = randomBytes(32);
+    let privKey;
+    do {
+      privKey = randomBytes(32);
+    } while (!secp256k1.privateKeyVerify(privKey));
+    const pubKey = secp256k1.publicKeyCreate(privKey);
+    const pubkeyHex = Buffer.from(pubKey).toString("hex");
+    const privkeyHex = privKey.toString("hex");
+    console.log(pubkeyHex, "\n", privkeyHex);
+
+    const res = await axios.post(
+      "https://proof-service.next.id/v1/proof/payload",
+      {
+        action: "create",
+        platform: "ethereum",
+        identity: "0xA29B144A449E414A472c60C7AAf1aaFfE329021D",
+        public_key: pubkeyHex,
+      }
+    );
+
+    console.log(res.data);
+    const message = Buffer.from(res.data.sign_payload);
+    setMessage("0x1234");
+
+    const secretKey = Buffer.from(privkeyHex, "hex");
+    const signatureSp = await personalSign(message, secretKey);
+    const signatureSw = await signMessage();
+    console.log("message", message);
+    console.log("signatureSw", signatureSw);
+
+    // console.log(signatureSw, signatureSw.slice(2));
+    // console.log(Buffer.from(signatureSw.slice(2), "hex"));
+
+    await axios.post("https://proof-service.next.id/v1/proof", {
+      action: "create",
+      platform: "ethereum",
+      identity: address,
+      public_key: pubkeyHex,
+      extra: {
+        signature: signatureSp.toString("base64"),
+        wallet_signature: Buffer.from(signatureSw.slice(2), "hex").toString(
+          "base64"
+        ),
+      },
+      uuid: res.data.uuid,
+      created_at: res.data.created_at,
+    });
+
+    setPrivKey(privkeyHex);
+    setPubKey(pubkeyHex);
+
+    // const res = await axios.post(
+    //   "https://proof-service.next.id/v1/proof/payload",
+    //   {
+    //     action: "create",
+    //     platform: "twitter",
+    //     identity: "SeungAnJung",
+    //     public_key: pubkeyHex,
+    //   }
+    // );
+    // console.log(res.data);
+
+    // console.log(signatureString);
+    // const location = "1682520456652283905";
+    // const uuid = "e8b9d935-3498-4e8a-b918-e0184ce02ce9";
+    // const created_at = "1689979023";
+    // await axios.post("https://proof-service.next.id/v1/proof", {
+    //   action: "create",
+    //   platform: "twitter",
+    //   identity: "SeungAnJung",
+    //   public_key:
+    //     "029155ca00b9185656dc880489edc7f32023f835e91e1d279ddb07bb4278a64842",
+    //   proof_location: location,
+    //   extra: {},
+    //   uuid,
+    //   created_at,
+    // });
+    // const res1 = await axios.get(
+    //   "https://proof-service.next.id/v1/proof?platform=twitter&identity=SeungAnJung"
+    // );
+    // console.log(res1.data.ids[0].proofs);
+    // const msg = randomBytes(32);
+    // let privKey;
+    // do {
+    //   privKey = randomBytes(32);
+    // } while (!secp256k1.privateKeyVerify(privKey));
+    // const pubKey = secp256k1.publicKeyCreate(privKey);
+    // const pubkeyHex = Buffer.from(pubKey).toString("hex");
+    // const privkeyHex = privKey.toString("hex");
+    // console.log(pubkeyHex, "\n", privkeyHex);
+    // const res = await axios.post(
+    //   "https://proof-service.next.id/v1/proof/payload",
+    //   {
+    //     action: "create",
+    //     platform: "ethereum",
+    //     identity: "0xA29B144A449E414A472c60C7AAf1aaFfE329021D",
+    //     public_key: pubkeyHex,
+    //   }
+    // );
+    // console.log(res.data);
+    // const message = Buffer.from(res.data.sign_payload);
+    // const secretKey = Buffer.from(privkeyHex, "hex");
+    // const signatureSp = await personalSign(message, secretKey);
+    // const signatureSw = await mainDeployer.signMessage(message);
+    // console.log(signatureSw, signatureSw.slice(2));
+    // console.log(Buffer.from(signatureSw.slice(2), "hex"));
+    // await axios.post("https://proof-service.next.id/v1/proof", {
+    //   action: "create",
+    //   platform: "ethereum",
+    //   identity: mainDeployer.address,
+    //   public_key: pubkeyHex,
+    //   extra: {
+    //     signature: signatureSp.toString("base64"),
+    //     wallet_signature: Buffer.from(signatureSw.slice(2), "hex").toString(
+    //       "base64"
+    //     ),
+    //   },
+    //   uuid: res.data.uuid,
+    //   created_at: res.data.created_at,
+    // });
+  };
 
   useEffect(() => {
     setIsOpenModal(isSuccess);
@@ -318,19 +469,15 @@ export default function Profile() {
                   placeholder="builder"
                   onChange={(e) => setGithub(e.target.value)}
                 />
-                {/* <label
-                  htmlFor="portfolio"
-                  className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-                >
-                  Portfolio (Optional)
-                </label>
-                <input
-                  type="text"
-                  id="portfoli"
-                  className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  required
-                  onChange={(e) => setPortfolio(e.target.value)}
-                /> */}
+                <div className="flex justify-end gap-x-5 mt-4">
+                  <button
+                    className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 text-white border-white bg-[#1b2847]"
+                    onClick={() => verifyIdentity()}
+                  >
+                    Verify Your Identity
+                  </button>
+                  <Image src="/XID.png" width={100} height={20} alt="..." />
+                </div>
               </div>
             </div>
           </div>

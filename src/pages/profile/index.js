@@ -5,7 +5,7 @@ import Router from "next/router";
 import { randomBytes } from "crypto";
 import { BN, ecsign, keccakFromString, toRpcSig } from "ethereumjs-util";
 import * as secp256k1 from "secp256k1";
-
+import clsx from "clsx";
 import { useAccount, useSignMessage } from "wagmi";
 import {
   usePrepareContractWrite,
@@ -96,26 +96,10 @@ export default function Profile() {
   const [level, setLevel] = useState("");
   const [responseBytes, setResponseBytes] = useState("");
 
-  const [message, setMessage] = useState("");
-  const [privKey, setPrivKey] = useState("");
-  const [pubKey, setPubKey] = useState("");
-
-  // const { config } = usePrepareContractWrite({
-  //   address: builderGardenAddress,
-  //   abi: builderGardenABI,
-  //   functionName: "builderSignUp",
-  //   args: [nickname],
-  //   enabled: Boolean(nickname),
-  // });
-  // const { data, write } = useContractWrite(config);
-
-  // const { isSuccess } = useWaitForTransaction({
-  //   hash: data?.hash,
-  // });
-
-  // useEffect(() => {
-  //   setIsOpenModal(isSuccess);
-  // }, [isSuccess]);
+  const [nextIdKey, setNextIdKey] = useState(["", ""]);
+  const [avatar, setAvatar] = useState("");
+  const [signature, setSignature] = useState(["", ""]);
+  const [isVerified, setIsVerified] = useState(false);
 
   const fundingConfig = {
     totalAmount: "1000000000000000000",
@@ -135,14 +119,7 @@ export default function Profile() {
     hash: data?.hash,
   });
 
-  const {
-    data: signature,
-    isError,
-    isLoading,
-    signMessage,
-  } = useSignMessage({
-    message,
-  });
+  const { signMessageAsync } = useSignMessage();
 
   async function personalSign(message, privateKey) {
     const messageHash = keccakFromString(
@@ -156,7 +133,7 @@ export default function Profile() {
     );
   }
 
-  const verifyIdentity = async () => {
+  const verifyIdentityEthereum = async (twitter, github) => {
     const msg = randomBytes(32);
     let privKey;
     do {
@@ -166,8 +143,7 @@ export default function Profile() {
     const pubkeyHex = Buffer.from(pubKey).toString("hex");
     const privkeyHex = privKey.toString("hex");
     console.log(pubkeyHex, "\n", privkeyHex);
-
-    const res = await axios.post(
+    const resEth = await axios.post(
       "https://proof-service.next.id/v1/proof/payload",
       {
         action: "create",
@@ -176,20 +152,12 @@ export default function Profile() {
         public_key: pubkeyHex,
       }
     );
-
-    console.log(res.data);
-    const message = Buffer.from(res.data.sign_payload);
-    setMessage("0x1234");
-
+    const messageEth = Buffer.from(resEth.data.sign_payload);
     const secretKey = Buffer.from(privkeyHex, "hex");
-    const signatureSp = await personalSign(message, secretKey);
-    const signatureSw = await signMessage();
-    console.log("message", message);
-    console.log("signatureSw", signatureSw);
-
-    // console.log(signatureSw, signatureSw.slice(2));
-    // console.log(Buffer.from(signatureSw.slice(2), "hex"));
-
+    const signatureSp = await personalSign(messageEth, secretKey);
+    const signatureSw = await signMessageAsync({
+      message: resEth.data.sign_payload,
+    });
     await axios.post("https://proof-service.next.id/v1/proof", {
       action: "create",
       platform: "ethereum",
@@ -201,82 +169,52 @@ export default function Profile() {
           "base64"
         ),
       },
-      uuid: res.data.uuid,
-      created_at: res.data.created_at,
+      uuid: resEth.data.uuid,
+      created_at: resEth.data.created_at,
     });
 
-    setPrivKey(privkeyHex);
-    setPubKey(pubkeyHex);
+    const res1 = await axios.get(
+      `https://proof-service.next.id/v1/proof?platform=ethereum&identity=${address}`
+    );
+    const avatar = res1.data.ids[0].avatar;
+    console.log(github, twitter);
 
-    // const res = await axios.post(
-    //   "https://proof-service.next.id/v1/proof/payload",
-    //   {
-    //     action: "create",
-    //     platform: "twitter",
-    //     identity: "SeungAnJung",
-    //     public_key: pubkeyHex,
-    //   }
-    // );
-    // console.log(res.data);
+    const resGit = await axios.post(
+      "https://proof-service.next.id/v1/proof/payload",
+      {
+        action: "create",
+        platform: "github",
+        identity: github,
+        public_key: pubkeyHex,
+      }
+    );
+    console.log(resGit.data.post_content.default);
+    const signatureGit = await personalSign(
+      Buffer.from(resGit.data.sign_payload),
+      Buffer.from(privkeyHex, "hex")
+    ).then((sig) => sig.toString("base64"));
+    const git = JSON.parse(resGit.data.post_content.default);
+    git["signature"] = signatureGit;
 
-    // console.log(signatureString);
-    // const location = "1682520456652283905";
-    // const uuid = "e8b9d935-3498-4e8a-b918-e0184ce02ce9";
-    // const created_at = "1689979023";
-    // await axios.post("https://proof-service.next.id/v1/proof", {
-    //   action: "create",
-    //   platform: "twitter",
-    //   identity: "SeungAnJung",
-    //   public_key:
-    //     "029155ca00b9185656dc880489edc7f32023f835e91e1d279ddb07bb4278a64842",
-    //   proof_location: location,
-    //   extra: {},
-    //   uuid,
-    //   created_at,
-    // });
-    // const res1 = await axios.get(
-    //   "https://proof-service.next.id/v1/proof?platform=twitter&identity=SeungAnJung"
-    // );
-    // console.log(res1.data.ids[0].proofs);
-    // const msg = randomBytes(32);
-    // let privKey;
-    // do {
-    //   privKey = randomBytes(32);
-    // } while (!secp256k1.privateKeyVerify(privKey));
-    // const pubKey = secp256k1.publicKeyCreate(privKey);
-    // const pubkeyHex = Buffer.from(pubKey).toString("hex");
-    // const privkeyHex = privKey.toString("hex");
-    // console.log(pubkeyHex, "\n", privkeyHex);
-    // const res = await axios.post(
-    //   "https://proof-service.next.id/v1/proof/payload",
-    //   {
-    //     action: "create",
-    //     platform: "ethereum",
-    //     identity: "0xA29B144A449E414A472c60C7AAf1aaFfE329021D",
-    //     public_key: pubkeyHex,
-    //   }
-    // );
-    // console.log(res.data);
-    // const message = Buffer.from(res.data.sign_payload);
-    // const secretKey = Buffer.from(privkeyHex, "hex");
-    // const signatureSp = await personalSign(message, secretKey);
-    // const signatureSw = await mainDeployer.signMessage(message);
-    // console.log(signatureSw, signatureSw.slice(2));
-    // console.log(Buffer.from(signatureSw.slice(2), "hex"));
-    // await axios.post("https://proof-service.next.id/v1/proof", {
-    //   action: "create",
-    //   platform: "ethereum",
-    //   identity: mainDeployer.address,
-    //   public_key: pubkeyHex,
-    //   extra: {
-    //     signature: signatureSp.toString("base64"),
-    //     wallet_signature: Buffer.from(signatureSw.slice(2), "hex").toString(
-    //       "base64"
-    //     ),
-    //   },
-    //   uuid: res.data.uuid,
-    //   created_at: res.data.created_at,
-    // });
+    const resTwit = await axios.post(
+      "https://proof-service.next.id/v1/proof/payload",
+      {
+        action: "create",
+        platform: "twitter",
+        identity: twitter,
+        public_key: pubkeyHex,
+      }
+    );
+    const signatureTwit = await personalSign(
+      Buffer.from(resTwit.data.sign_payload),
+      Buffer.from(privkeyHex, "hex")
+    ).then((sig) => sig.toString("base64"));
+    const twit = `🎭 Verify @SeungAnJung with @NextDotID.
+    Sig: ${signatureTwit}}`;
+
+    setNextIdKey([pubkeyHex, privkeyHex]);
+    setAvatar(avatar);
+    setSignature([twit, git]);
   };
 
   useEffect(() => {
@@ -367,12 +305,21 @@ export default function Profile() {
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
                 General
               </div>
-              <label
-                htmlFor="address"
-                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-              >
-                Wallet address
-              </label>
+              <div className="flex justify-between">
+                <label
+                  htmlFor="address"
+                  className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+                >
+                  Wallet address
+                </label>
+                <Image
+                  src={isVerified ? "/checkAfter.png" : "/checkBefore.png"}
+                  width={25}
+                  height={25}
+                  alt="cb"
+                />
+              </div>
+
               <input
                 type="text"
                 id="address"
@@ -440,12 +387,20 @@ export default function Profile() {
                 onChange={(e) => setDiscord(e.target.value)}
                 placeholder="builder#1234"
               />
-              <label
-                htmlFor="twitter"
-                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-              >
-                Twitter handle
-              </label>
+              <div className="flex justify-between">
+                <label
+                  htmlFor="twitter"
+                  className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+                >
+                  Twitter handle
+                </label>
+                <Image
+                  src={isVerified ? "/checkAfter.png" : "/checkBefore.png"}
+                  width={25}
+                  height={25}
+                  alt="cb"
+                />
+              </div>
               <input
                 type="text"
                 id="twitter"
@@ -455,12 +410,20 @@ export default function Profile() {
                 placeholder="builder"
               />
               <div className="flex-1">
-                <label
-                  htmlFor="github"
-                  className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-                >
-                  Github
-                </label>
+                <div className="flex justify-between">
+                  <label
+                    htmlFor="github"
+                    className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+                  >
+                    Github
+                  </label>
+                  <Image
+                    src={isVerified ? "/checkAfter.png" : "/checkBefore.png"}
+                    width={25}
+                    height={25}
+                    alt="cb"
+                  />
+                </div>
                 <input
                   type="text"
                   id="github"
@@ -469,59 +432,106 @@ export default function Profile() {
                   placeholder="builder"
                   onChange={(e) => setGithub(e.target.value)}
                 />
-                <div className="flex justify-end gap-x-5 mt-4">
-                  <button
-                    className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 text-white border-white bg-[#1b2847]"
-                    onClick={() => verifyIdentity()}
-                  >
-                    Verify Your Identity
-                  </button>
-                  <Image src="/XID.png" width={100} height={20} alt="..." />
-                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div>
-          <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
-            Proof of humanity
-          </div>
-          <div className="flex gap-10">
-            <div className="flex-1">
-              <div>
-                <SismoConnectButton
-                  config={{
-                    appId: "0xf4977993e52606cfd67b7a1cde717069",
-                  }}
-                  auths={[
-                    { authType: AuthType.TWITTER },
-                    { authType: AuthType.GITHUB },
-                  ]}
-                  claims={[
-                    {
-                      groupId: "0x1cde61966decb8600dfd0749bd371f12",
-                      value: 15,
-                    },
-                    {
-                      groupId: "0x682544d549b8a461d7fe3e589846bb7b",
-                      isOptional: true,
-                    },
-                  ]}
-                  onResponseBytes={(responseBytes) => {
-                    setResponseBytes(responseBytes);
-                  }}
-                  text={"Proove Your Humanity with Sismo"}
-                  disabled={true}
-                />
-                {responseBytes != "" && (
-                  <span className="text-[#38493C]">
-                    Proof generated successfully. <br />
-                    Click the button below to create your ERC-6551 Account!
-                    <br />
-                    Proof will verified in our contract.
-                  </span>
+        <div className="flex justify-between">
+          <div className="flex-1">
+            <div className="flex items-center h-[60px] ">
+              <Image src="/XID.png" width={70} height={250} alt="..." />
+              <span className="ml-[10px] text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
+                Proof of Identity
+              </span>
+            </div>
+            <div className="flex gap-10 mt-[10px]">
+              <div className="flex flex-col">
+                <button
+                  className={clsx(
+                    "rounded-full text-center text-base font-bold leading-6 p-4 border-2 text-white border-white",
+                    signature[0] != "" ? "bg-gray" : "bg-[#1b2847]"
+                  )}
+                  onClick={() => verifyIdentityEthereum(twitter, github)}
+                >
+                  Create Your Signature
+                </button>
+                {signature[0] != "" && (
+                  <>
+                    <button
+                      className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 text-white border-white bg-[#1b2847]"
+                      onClick={() => setIsVerified(true)}
+                    >
+                      Verify Your Identity
+                    </button>
+                    <input
+                      type="text"
+                      id="twitter"
+                      className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      required
+                      placeholder="Twit Id"
+                    />
+                    <input
+                      type="text"
+                      id="twitter"
+                      className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      required
+                      placeholder="Gist Id"
+                    />
+                  </>
                 )}
+              </div>
+              <div className="flex flex-col break-all">
+                <span>Twitter</span>
+                <div className="break-all">{signature[0]}</div>
+                <span>Github</span>
+                <div className="break-all">{JSON.stringify(signature[1])}</div>
+              </div>
+            </div>
+          </div>
+          <div className="flex-1 ml-[80px]">
+            <div className="flex items-center h-[60px]">
+              <Image src="/sismo.png" width={50} height={250} alt="..." />
+              <span className="ml-[10px] text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
+                Proof of Humanity
+              </span>
+            </div>
+            <div className="flex gap-10 mt-[10px]">
+              <div className="flex-1">
+                <div>
+                  <SismoConnectButton
+                    config={{
+                      appId: "0xf4977993e52606cfd67b7a1cde717069",
+                    }}
+                    auths={[
+                      { authType: AuthType.TWITTER },
+                      { authType: AuthType.GITHUB },
+                    ]}
+                    claims={[
+                      {
+                        groupId: "0x1cde61966decb8600dfd0749bd371f12",
+                        value: 15,
+                      },
+                      {
+                        groupId: "0x682544d549b8a461d7fe3e589846bb7b",
+                        isOptional: true,
+                      },
+                    ]}
+                    onResponseBytes={(responseBytes) => {
+                      setResponseBytes(responseBytes);
+                    }}
+                    text={"Proove Your Humanity with Sismo"}
+                    disabled={true}
+                  />
+                  {responseBytes != "" && (
+                    <span className="text-[#38493C]">
+                      Proof generated successfully. <br />
+                      Click the button below to create your ERC-6551 Account!
+                      <br />
+                      Proof will verified in our contract.
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>

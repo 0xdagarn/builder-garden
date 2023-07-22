@@ -36,16 +36,12 @@ const Modal = ({ isOpenModal, close }) => {
                       Attestation is submitted!
                     </div>
                     <Image
-                      src="/builder.png"
+                      src="/builderV2.png"
                       width={250}
                       height={250}
                       alt="..."
                     />
-                    <div className="flex">
-                      {/* <div>{nickname}SOnnyson</div>
-                      <div>{level}Level </div> */}
-                    </div>
-
+                    <div className="text-lg mb-14">{"Level Up!🥳"}</div>
                     <div className="flex items-center justify-center">
                       <button
                         className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
@@ -266,18 +262,18 @@ function Sponsors({ step }) {
                   <th scope="col" class="px-6 py-4">
                     Sponsor
                   </th>
+                  <th scope="col" class="px-6 py-4">
+                    Status
+                  </th>
                 </tr>
               </thead>
-              {step >= 4 && (
+              {step >= 3 && (
                 <tbody>
                   <tr class="border-b dark:border-neutral-500">
                     <td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
-                    <td class="whitespace-nowrap px-6 py-4">vitalik.eth</td>
-                  </tr>
-                  <tr class="border-b dark:border-neutral-500">
-                    <td class="whitespace-nowrap px-6 py-4 font-medium">2</td>
+                    <td class="whitespace-nowrap px-6 py-4">eas.eth</td>
                     <td class="whitespace-nowrap px-6 py-4">
-                      paris.ethglobal.eth
+                      {step === "3" ? "Waiting" : "Verified ✅"}
                     </td>
                   </tr>
                 </tbody>
@@ -536,6 +532,7 @@ function Profile({ step }) {
 export default function Inventory() {
   const [isOpenModal, setIsOpenModal] = useState(true);
   const [step, setStep] = useState("2");
+  const [sponsor, setSponsor] = useState("");
 
   const fundingConfig = {
     totalAmount: "1000000000000000000",
@@ -558,7 +555,12 @@ export default function Inventory() {
   useEffect(() => {
     setIsOpenModal(isSuccess);
 
-    if (isSuccess) setStep("3");
+    if (isSuccess) {
+      setStep("3");
+      setTimeout(() => {
+        setStep("4");
+      }, 10000);
+    }
   }, [isSuccess]);
 
   const attest = async () => {
@@ -636,7 +638,7 @@ export default function Inventory() {
                   borderLeft: "6px solid #bbb",
                   borderLeft:
                     step >= "3" ? "6px solid #b4eb67" : "6px solid #bbb",
-                  height: "180px",
+                  height: "220px",
                 }}
               />
               <div
@@ -739,6 +741,47 @@ export default function Inventory() {
                       required
                       // onChange={(e) => setTitle(e.target.value)}
                     />
+                  </div>
+                )}
+                <label
+                  htmlFor="title"
+                  className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+                >
+                  Got prize from
+                </label>
+                {step >= 3 ? (
+                  <div>
+                    <input
+                      type="text"
+                      id="hacakthon"
+                      className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      required
+                      value="Ethereum Attestation Service"
+                      disabled
+                      // onClick={() => Router.replace("/projects/0")}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <select
+                      id="small"
+                      className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      onChange={(e) => setSponsor(e.target.value)}
+                    >
+                      <option value="">Choose sponsor</option>
+                      <option value="designer">Sismo</option>
+                      <option value="eas">EAS</option>
+                      <option value="designer">XMTP</option>
+                      <option value="designer">Push Protocol</option>
+                      <option value="designer">Air stack</option>
+                    </select>
+                    {/* <input
+                      type="text"
+                      id="title"
+                      className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      required
+                      // onChange={(e) => setTitle(e.target.value)}
+                    /> */}
                     <div
                       className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white mt-4"
                       onClick={() => attest()}
@@ -748,7 +791,7 @@ export default function Inventory() {
                   </div>
                 )}
               </div>
-              <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mt-16">
+              <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mt-28">
                 Sponsors
               </div>
               <Sponsors step={step} />

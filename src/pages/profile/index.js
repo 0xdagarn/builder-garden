@@ -287,7 +287,7 @@ export default function Profile() {
                 className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
                 onChange={(e) => setDiscord(e.target.value)}
-                placeholder="Builder#1234"
+                placeholder="builder#1234"
               />
               <label
                 htmlFor="twitter"
@@ -301,79 +301,72 @@ export default function Profile() {
                 className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
                 onChange={(e) => setTwitter(e.target.value)}
-                placeholder="@Builder"
+                placeholder="builder"
               />
+              <div className="flex-1">
+                <label
+                  htmlFor="github"
+                  className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+                >
+                  Github
+                </label>
+                <input
+                  type="text"
+                  id="github"
+                  className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                  placeholder="builder"
+                  onChange={(e) => setGithub(e.target.value)}
+                />
+                {/* <label
+                  htmlFor="portfolio"
+                  className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+                >
+                  Portfolio (Optional)
+                </label>
+                <input
+                  type="text"
+                  id="portfoli"
+                  className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                  onChange={(e) => setPortfolio(e.target.value)}
+                /> */}
+              </div>
             </div>
           </div>
         </div>
 
         <div>
           <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
-            Proof of yourself
+            Proof of humanity
           </div>
           <div className="flex gap-10">
             <div className="flex-1">
-              <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
-                Proof of work
-              </div>
-              <label
-                htmlFor="github"
-                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-              >
-                Github
-              </label>
-              <input
-                type="text"
-                id="github"
-                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                required
-                onChange={(e) => setGithub(e.target.value)}
-              />
-              <label
-                htmlFor="portfolio"
-                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
-              >
-                Portfolio (Optional)
-              </label>
-              <input
-                type="text"
-                id="portfoli"
-                className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                required
-                onChange={(e) => setPortfolio(e.target.value)}
-              />
-            </div>
-            <div className="flex-1">
-              <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
-                Sismo!!
-              </div>
               <div>
-                {isConnected && (
-                  <SismoConnectButton
-                    config={{
-                      appId: "0xf4977993e52606cfd67b7a1cde717069",
-                    }}
-                    auths={[
-                      { authType: AuthType.TWITTER },
-                      { authType: AuthType.GITHUB },
-                    ]}
-                    claims={[
-                      {
-                        groupId: "0x1cde61966decb8600dfd0749bd371f12",
-                        value: 15,
-                      },
-                      {
-                        groupId: "0x682544d549b8a461d7fe3e589846bb7b",
-                        isOptional: true,
-                      },
-                    ]}
-                    onResponseBytes={(responseBytes) => {
-                      setResponseBytes(responseBytes);
-                    }}
-                    text={"Proove Your Humanity with Sismo"}
-                    disabled={true}
-                  />
-                )}
+                <SismoConnectButton
+                  config={{
+                    appId: "0xf4977993e52606cfd67b7a1cde717069",
+                  }}
+                  auths={[
+                    { authType: AuthType.TWITTER },
+                    { authType: AuthType.GITHUB },
+                  ]}
+                  claims={[
+                    {
+                      groupId: "0x1cde61966decb8600dfd0749bd371f12",
+                      value: 15,
+                    },
+                    {
+                      groupId: "0x682544d549b8a461d7fe3e589846bb7b",
+                      isOptional: true,
+                    },
+                  ]}
+                  onResponseBytes={(responseBytes) => {
+                    setResponseBytes(responseBytes);
+                  }}
+                  text={"Proove Your Humanity with Sismo"}
+                  disabled={true}
+                />
                 {responseBytes != "" && (
                   <span className="text-[#38493C]">
                     Proof generated successfully. <br />
@@ -389,7 +382,7 @@ export default function Profile() {
 
         <div className="flex items-center justify-center mt-8">
           <button
-            className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
+            className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white mt-10"
             onClick={() => create()}
           >
             Create an ERC6551 Account

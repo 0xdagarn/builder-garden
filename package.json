@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@pushprotocol/uiembed": "^0.2.0",
+    "@sismo-core/sismo-connect-react": "^0.0.20",
     "autoprefixer": "10.4.14",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.11",

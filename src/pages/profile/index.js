@@ -9,6 +9,12 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+import {
+  SismoConnectButton, // the Sismo Connect React button displayed below
+  SismoConnectConfig,
+  AuthType,
+  ClaimType,
+} from "@sismo-core/sismo-connect-react";
 
 import builderGardenABI from "../abis/BuilderGardenABI.json";
 const builderGardenAddress = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
@@ -74,7 +80,7 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
 
 export default function Profile() {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
   const [position, setPosition] = useState("builder");
   const [nickname, setNickname] = useState("");
@@ -85,6 +91,7 @@ export default function Profile() {
   const [github, setGithub] = useState("");
   const [portfolio, setPortfolio] = useState("");
   const [level, setLevel] = useState("");
+  const [responseBytes, setResponseBytes] = useState("");
 
   // const { config } = usePrepareContractWrite({
   //   address: builderGardenAddress,
@@ -339,6 +346,42 @@ export default function Profile() {
             <div className="flex-1">
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
                 Sismo!!
+              </div>
+              <div>
+                {isConnected && (
+                  <SismoConnectButton
+                    config={{
+                      appId: "0xf4977993e52606cfd67b7a1cde717069",
+                    }}
+                    auths={[
+                      { authType: AuthType.TWITTER },
+                      { authType: AuthType.GITHUB },
+                    ]}
+                    claims={[
+                      {
+                        groupId: "0x1cde61966decb8600dfd0749bd371f12",
+                        value: 15,
+                      },
+                      {
+                        groupId: "0x682544d549b8a461d7fe3e589846bb7b",
+                        isOptional: true,
+                      },
+                    ]}
+                    onResponseBytes={(responseBytes) => {
+                      setResponseBytes(responseBytes);
+                    }}
+                    text={"Proove Your Humanity with Sismo"}
+                    disabled={true}
+                  />
+                )}
+                {responseBytes != "" && (
+                  <span className="text-[#38493C]">
+                    Proof generated successfully. <br />
+                    Click the button below to create your ERC-6551 Account!
+                    <br />
+                    Proof will verified in our contract.
+                  </span>
+                )}
               </div>
             </div>
           </div>

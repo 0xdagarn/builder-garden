@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { Web3Button } from "@web3modal/react";
+import Router from "next/router";
 import Image from "next/image";
 
 import {

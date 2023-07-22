@@ -42,7 +42,7 @@ function Profile() {
           marginTop: "8px",
         }}
       >
-        Sonny
+        Alex
       </div>
       <div>Full stack developer</div>
       <div>LV 1</div>
@@ -246,7 +246,10 @@ function Funding({ backers, vaultContract }) {
   );
 }
 
-function Backers() {
+function Backers({ isFundingCompleted }) {
+  const router = useRouter();
+  const { projectId } = router.query;
+
   return (
     <div class="flex flex-col">
       <label
@@ -275,6 +278,118 @@ function Backers() {
               <tbody>
                 <tr class="border-b dark:border-neutral-500">
                   <td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">2</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">3</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">4</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">5</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">6</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">7</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">8</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">9</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">10</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">11</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">12</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">13</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">14</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">15</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">16</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">17</td>
                   <td class="whitespace-nowrap px-6 py-4">
                     0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
                   </td>
@@ -349,6 +464,9 @@ function Claim() {
 }
 
 export default function Project() {
+  const router = useRouter();
+  const { projectId } = router.query;
+
   return (
     <div
       style={{
@@ -359,7 +477,7 @@ export default function Project() {
     >
       <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
         <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
-          Project Name
+          Unleashing Dreams
         </div>
         <div className="flex gap-12">
           <div
@@ -378,7 +496,21 @@ export default function Project() {
               id="unit"
               className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
               required
-              value="0xb66ef21e98Df914409f5c638d6E3dAB8f093EB5A"
+              value="Alex (0xb66ef21e98Df914409f5c638d6E3dAB8f093EB5A)"
+              disabled
+            />
+            <label
+              htmlFor="unit"
+              className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+            >
+              ERC6551 Wallet Address
+            </label>
+            <input
+              type="text"
+              id="unit"
+              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
+              required
+              value="0x1f9090aae28b8a3dceadf281b0f12828e676c326"
               disabled
             />
             <label
@@ -387,12 +519,12 @@ export default function Project() {
             >
               Story
             </label>
-            <input
-              type="text"
+            <textarea
+              rows="10"
               id="unit"
               className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
               required
-              value="My story is blarblarblar"
+              value="In a small town, Alex, a passionate programmer, loved blockchain technology, especially Ethereum. When they learned about an Ethereum hackathon in another city, they wanted to go, but they had limited funds. So, Alex started a crowdfunding campaign with a heartfelt narrative about their passion for Ethereum and blockchain technology. The blockchain community responded generously, and Alex reached their funding goal and went to the hackathon. There, Alex met brilliant minds, collaborated on various Ethereum projects, and caught the attention of industry experts and potential employers. Alex realized the power of community and collective support, and this experience transformed their dreams into reality. Today, Alex is a successful blockchain developer and an active member of the Ethereum community, inspiring countless others to chase their passions and believe in the power of community and collective dreams."
               disabled
             />
             <label
@@ -406,15 +538,14 @@ export default function Project() {
               id="unit"
               className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required
-              value="0.05 / 1 ETH ♦️"
+              value={`${projectId === "0" ? "0 / 1 ETH ♦️" : "1 / 1 ETH ♦️"}`}
               disabled
             />
-            <Backers />
+            {projectId === "1" ? <Backers /> : null}
           </div>
           <div className="flex-1 mt-2">
             <Profile />
-            <Funding />
-            <Claim />
+            {projectId === "0" ? <Funding /> : <Claim />}
           </div>
         </div>
       </div>

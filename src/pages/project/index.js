@@ -166,8 +166,9 @@ export default function Project() {
             how you would be using the funding round.
           </div>
 
-          <input
-            type="text"
+          <textarea
+            rows={10}
+            // type="text"
             id="title"
             className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required

@@ -35,7 +35,7 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
                     </div>
                     <div className="flex items-center justify-center flex-col text-var-brown font-feature-settings-0 text-xl leading-snug px-5 my-5">
                       {"You've created a builder profile on BuilderGarden!"}
-                      <br /> Excited to see how you grow as a bulilder
+                      <br /> Excited to see how you grow as a bulilder.
                       {/* {position === "builder"
                         ? "You've created a builder profile on BuilderGarden! Excited to see how you grow as a bulilder"
                         : "Backer!"} */}

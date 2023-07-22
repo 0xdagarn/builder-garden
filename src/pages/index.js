@@ -15,15 +15,16 @@ function Project({ project, projectId }) {
         marginBottom: "50px",
       }}
     >
-      <Link href={{ pathname: `/projects/${project._id}` }}>
+      <Link href={{ pathname: `/projects/0` }}>
         <div
+          className="px-8 py-4"
           style={{
             borderRadius: "28px",
             background: "#ffffff",
-            padding: "24px",
+            paddingBottom: "25px",
           }}
         >
-          <span
+          {/* <span
             style={{
               width: "100px",
               overflow: "hidden",
@@ -44,7 +45,7 @@ function Project({ project, projectId }) {
             }}
           >
             2 Days Left
-          </span>
+          </span> */}
           <div
             className="mt-4 mb-2"
             style={{
@@ -58,43 +59,26 @@ function Project({ project, projectId }) {
               lineHeight: "normal",
             }}
           >
-            {project.title}
+            Unleashing Dreams
           </div>
 
-          <div className="mt-3 w-full bg-gray-200 rounded-full h-1.5 mb-1 dark:bg-gray-300">
+          {/* <div className="mt-3 w-full bg-gray-200 rounded-full h-1.5 mb-1 dark:bg-gray-300">
             <div
               className="bg-green-800 h-1.5 rounded-full dark:bg-green-800"
               style={{
                 width: "50%",
               }}
             ></div>
-          </div>
+          </div> */}
           <div className="flex items-center mt-2">
-            <div
-              style={{
-                color: "#38493C",
-                fontFamily: "Grillmaster Wide",
-                fontSize: "16px",
-                fontStyle: "normal",
-                fontWeight: "700",
-                lineHeight: "normal",
-              }}
-            >
-              {project.amount} Funded
-            </div>
-            <div
-              className="ml-2"
-              style={{
-                color: "#A1A6A2",
-                fontFamily: "Grillmaster Wide",
-                fontSize: "14px",
-                fontStyle: "normal",
-                fontWeight: "400",
-                lineHeight: "normal",
-              }}
-            >
-              (0.5 ETH / 1.0 ETH)
-            </div>
+            <input
+              type="text"
+              id="unit"
+              className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+              value="0.00 / 1 ETH ♦️"
+              disabled
+            />
           </div>
 
           <div
@@ -115,14 +99,7 @@ function Project({ project, projectId }) {
                 flexDirection: "column",
               }}
             >
-              <div
-                style={{
-                  height: "72px",
-                  width: "72px",
-                  backgroundColor: "#bbb",
-                  borderRadius: "50%",
-                }}
-              ></div>
+              <Image src="/builder.png" width={100} height={100} alt="..." />
               <div
                 style={{
                   width: "50px",
@@ -143,7 +120,7 @@ function Project({ project, projectId }) {
                     "var(--grad-1, linear-gradient(90deg, #62F08A 0%, #07A4C7 100%))",
                 }}
               >
-                LV. 6
+                LV. 1
               </div>
             </div>
             <div className="ml-4">
@@ -157,7 +134,7 @@ function Project({ project, projectId }) {
                   lineHeight: "normal",
                 }}
               >
-                {project.builderInfo.nickName}
+                Alex
               </div>
               <div
                 className="mt-1"
@@ -170,30 +147,27 @@ function Project({ project, projectId }) {
                   lineHeight: "normal",
                 }}
               >
-                {project.builderInfo.role}
+                Developer
               </div>
               <div class="flex mt-1">
-                {project.builderInfo.interest.map((interest, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      color: "#02C739",
-                      fontFamily: "Grillmaster Wide",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: "400",
-                      lineHeight: "normal",
-                      marginRight: "7px",
-                    }}
-                  >
-                    {interest}
-                  </div>
-                ))}
+                <div
+                  style={{
+                    color: "#02C739",
+                    fontFamily: "Grillmaster Wide",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: "400",
+                    lineHeight: "normal",
+                    marginRight: "7px",
+                  }}
+                >
+                  #NFT
+                </div>
               </div>
             </div>
           </div>
 
-          <div
+          {/* <div
             className="mt-4 mb-1 p-4"
             style={{
               color: "var(--brown, #38493C)",
@@ -211,9 +185,9 @@ function Project({ project, projectId }) {
             <div className="mt-2">
               <div className="flex">
                 {project.backers &&
-                  project.backers.map((backer, index) => (
+                  project.backers.map((backer) => (
                     <div
-                      key={index}
+                      key={backer}
                       style={{
                         height: "48px",
                         width: "48px",
@@ -226,7 +200,7 @@ function Project({ project, projectId }) {
               </div>
               <div className="flex"></div>
             </div>
-          </div>
+          </div> */}
         </div>
       </Link>
     </div>
@@ -299,13 +273,23 @@ export default function Home() {
         go out to the world
       </div>
 
-      <div className="mb-12">
-        <Image
-          src="/stat.png"
-          width={1300}
-          height={1400}
-          alt="Picture of the author"
-        />
+      <div className="mt-12 mb-36 flex flex-row gap-16">
+        <div className="flex-1">
+          <Image
+            src="/builder.png"
+            width={200}
+            height={1400}
+            alt="Picture of the author"
+          />
+        </div>
+        <div className="flex-1">
+          <Image
+            src="/backer.png"
+            width={200}
+            height={1400}
+            alt="Picture of the author"
+          />
+        </div>
       </div>
 
       <div
@@ -339,10 +323,9 @@ export default function Home() {
             justifyContent: "center",
           }}
         >
-          <span
+          <div
             style={{
               display: "flex",
-              alignItems: "center",
               justifyContent: "space-around",
               paddingBottom: "100px",
               columnGap: "50px",
@@ -350,15 +333,16 @@ export default function Home() {
               paddingRight: "10%",
             }}
           >
-            {projects &&
+            <Project />
+            {/* {projects &&
               projects.map((project, projectId) => (
                 <Project
                   project={project}
                   projectId={projectId}
                   key={projectId}
                 />
-              ))}
-          </span>
+              ))} */}
+          </div>
         </div>
       </div>
     </div>

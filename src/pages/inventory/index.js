@@ -10,9 +10,9 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 
-import builderGardenABI from "../../../src/abis/BuilderGardenABI.json";
+import builderGardenABI from "../abis/BuilderGardenABI.json";
 const builderGardenAddress = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
-import builderVaultFactoryABI from "../../../src/abis/builderVaultFactoryABI.json";
+import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
 const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 
 const Modal = ({ isOpenModal, close }) => {

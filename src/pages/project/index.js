@@ -6,7 +6,7 @@ import {
 } from "wagmi";
 import Router from "next/router";
 
-import builderVaultFactoryABI from "../../../src/abis/builderVaultFactoryABI.json";
+import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
 const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 
 const Modal = ({ isOpenModal, nickname, level, position }) => {

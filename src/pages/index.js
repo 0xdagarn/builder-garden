@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import Image from "next/image";
-
+import Router from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -280,6 +280,7 @@ export default function Home() {
             width={200}
             height={1400}
             alt="Picture of the author"
+            onClick={() => Router.replace("/profile")}
           />
         </div>
         <div className="flex-1">

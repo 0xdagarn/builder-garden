@@ -48,7 +48,9 @@ export default function App({ Component, pageProps }) {
               cursor: "pointer",
             }}
           />
-          <Web3Button />
+          <div>
+            <Web3Button />
+          </div>
         </div>
         <Component {...pageProps} />
       </WagmiConfig>

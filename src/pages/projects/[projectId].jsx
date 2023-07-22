@@ -10,7 +10,7 @@ import {
 } from "wagmi";
 import Image from "next/image";
 import { ethers } from "ethers";
-
+import { EmbedSDK } from "@pushprotocol/uiembed";
 import BuilderVaultImplABI from "../../../src/abis/BuilderVaultImplABI.json";
 const builderGardenContract = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
 import builderVaultFactoryABI from "../../../src/abis/builderVaultFactoryABI.json";
@@ -638,6 +638,39 @@ export default function Project() {
   const router = useRouter();
   const { projectId } = router.query;
 
+  const { address, isConnected } = useAccount();
+
+  useEffect(() => {
+    if (address) {
+      console.log("here", address);
+      // 'your connected wallet address'
+      EmbedSDK.init({
+        headerText: "Unleashing Dreams", // optional
+        targetID: "sdk-trigger-id", // mandatory
+        appName: "FundMe", // mandatory
+        user: `0xA29B144A449E414A472c60C7AAf1aaFfE329021D`, // mandatory
+        chainId: 5, // mandatory
+        viewOptions: {
+          type: "sidebar", // optional [default: 'sidebar', 'modal']
+          showUnreadIndicator: true, // optional
+          unreadIndicatorColor: "#cc1919",
+          unreadIndicatorPosition: "bottom-right",
+        },
+        theme: "light",
+        onOpen: () => {
+          console.log("-> client dApp onOpen callback");
+        },
+        onClose: () => {
+          console.log("-> client dApp onClose callback");
+        },
+      });
+    }
+
+    return () => {
+      EmbedSDK.cleanup();
+    };
+  }, []);
+
   return (
     <div
       style={{
@@ -648,9 +681,20 @@ export default function Project() {
     >
       <Modal />
       <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
-        <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
-          Unleashing Dreams
+        <div className="flex justify-between">
+          <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
+            Unleashing Dreams
+          </div>
+          <button id="sdk-trigger-id">
+            <Image
+              alt="push-protocol"
+              src="/push-protocol.png"
+              width={40}
+              height={40}
+            />
+          </button>
         </div>
+
         <div className="flex gap-12">
           <div
             style={{

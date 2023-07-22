@@ -5,6 +5,7 @@ import Router from "next/router";
 import { randomBytes } from "crypto";
 import { BN, ecsign, keccakFromString, toRpcSig } from "ethereumjs-util";
 import * as secp256k1 from "secp256k1";
+import { ethers } from "ethers";
 
 import { useAccount, useSignMessage } from "wagmi";
 import {
@@ -12,6 +13,8 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+import { signMessage } from "@wagmi/core";
+
 import {
   SismoConnectButton, // the Sismo Connect React button displayed below
   SismoConnectConfig,
@@ -113,10 +116,6 @@ export default function Profile() {
   //   hash: data?.hash,
   // });
 
-  // useEffect(() => {
-  //   setIsOpenModal(isSuccess);
-  // }, [isSuccess]);
-
   const fundingConfig = {
     totalAmount: "1000000000000000000",
     deadline: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
@@ -141,7 +140,18 @@ export default function Profile() {
     isLoading,
     signMessage,
   } = useSignMessage({
-    message,
+    onError(error) {
+      console.log("Error", error);
+    },
+    onMutate(args) {
+      console.log("Mutate", args);
+    },
+    onSettled(data, error) {
+      console.log("Settled", { data, error });
+    },
+    onSuccess(data) {
+      console.log("Success", data);
+    },
   });
 
   async function personalSign(message, privateKey) {
@@ -180,33 +190,35 @@ export default function Profile() {
     console.log(res.data);
     const message = Buffer.from(res.data.sign_payload);
     setMessage("0x1234");
+    // setMessage(message);
+    console.log(message);
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
 
     const secretKey = Buffer.from(privkeyHex, "hex");
     const signatureSp = await personalSign(message, secretKey);
-    const signatureSw = await signMessage();
-    console.log("message", message);
-    console.log("signatureSw", signatureSw);
+    const signatureSw = await signer.signMessage(message);
 
-    // console.log(signatureSw, signatureSw.slice(2));
-    // console.log(Buffer.from(signatureSw.slice(2), "hex"));
+    console.log("signatureSp", signatureSp, "signatureSw", signatureSw);
 
-    await axios.post("https://proof-service.next.id/v1/proof", {
-      action: "create",
-      platform: "ethereum",
-      identity: address,
-      public_key: pubkeyHex,
-      extra: {
-        signature: signatureSp.toString("base64"),
-        wallet_signature: Buffer.from(signatureSw.slice(2), "hex").toString(
-          "base64"
-        ),
-      },
-      uuid: res.data.uuid,
-      created_at: res.data.created_at,
-    });
+    // await axios.post("https://proof-service.next.id/v1/proof", {
+    //   action: "create",
+    //   platform: "ethereum",
+    //   identity: address,
+    //   public_key: pubkeyHex,
+    //   extra: {
+    //     signature: signatureSp.toString("base64"),
+    //     wallet_signature: Buffer.from(signatureSw.slice(2), "hex").toString(
+    //       "base64"
+    //     ),
+    //   },
+    //   uuid: res.data.uuid,
+    //   created_at: res.data.created_at,
+    // });
 
-    setPrivKey(privkeyHex);
-    setPubKey(pubkeyHex);
+    // setPrivKey(privkeyHex);
+    // setPubKey(pubkeyHex);
 
     // const res = await axios.post(
     //   "https://proof-service.next.id/v1/proof/payload",

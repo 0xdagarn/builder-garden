@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { readContract, readContracts } from "@wagmi/core";
+
 import {
   usePrepareContractWrite,
   useContractWrite,
@@ -12,6 +13,106 @@ import { ethers } from "ethers";
 
 import BuilderVaultImplABI from "../../../src/abis/BuilderVaultImplABI.json";
 const builderGardenContract = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
+import builderVaultFactoryABI from "../../../src/abis/builderVaultFactoryABI.json";
+const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
+
+const Modal = ({ isOpenModal, nickname, level, position }) => {
+  return (
+    <div>
+      {isOpenModal && (
+        <div>
+          <div
+            className="relative z-10"
+            aria-labelledby="modal-title"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+            <div className="fixed inset-0 z-10 overflow-y-auto">
+              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  <div className="p-4 flex items-center justify-center flex-col">
+                    <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mt-4">
+                      Congratulations!
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        id="unit"
+                        className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-8"
+                        required
+                        value="0.05 / 1 ETH ♦️"
+                        disabled
+                      />
+                    </div>
+                    <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mt-4 mb-16">
+                      Your funding has been successful!
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <button className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white">
+                        Got it!
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ClaimModal = ({ isOpenModal, nickname, level, position }) => {
+  return (
+    <div>
+      {isOpenModal && (
+        <div>
+          <div
+            className="relative z-10"
+            aria-labelledby="modal-title"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+            <div className="fixed inset-0 z-10 overflow-y-auto">
+              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  <div className="p-4 flex items-center justify-center flex-col">
+                    <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mt-4">
+                      Congratulations!
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        id="unit"
+                        className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-8"
+                        required
+                        value="1 ETH ♦️"
+                        disabled
+                      />
+                    </div>
+                    <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mt-4 mb-16">
+                      Your claim has been successful!
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <button className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white">
+                        Got it!
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 function Profile() {
   return (
@@ -50,33 +151,56 @@ function Profile() {
   );
 }
 
-function Funding({ backers, vaultContract }) {
+function Funding({ backers, vaultContract, setIsModal }) {
   const [fund, setFund] = useState(0.05);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const fundingConfig = {
+    totalAmount: "1000000000000000000",
+    deadline: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+    title: "Title1234",
+  };
+
+  const { config } = usePrepareContractWrite({
+    address: builderVaultFactoryAddress,
+    abi: builderVaultFactoryABI,
+    functionName: "deployVault",
+    args: [fundingConfig],
+  });
+  const { data, write } = useContractWrite(config);
+
+  const { isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
+  useEffect(() => {
+    setIsOpenModal(isSuccess);
+  }, [isSuccess]);
 
   const fundNow = async () => {
-    if (vaultContract) {
-      if (
-        typeof window !== "undefined" &&
-        typeof window.ethereum !== "undefined"
-      ) {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-
-        const BuilderVault = new ethers.Contract(
-          vaultContract,
-          BuilderVaultImplABI,
-          signer
-        );
-        const unit = Math.ceil(fund / 0.05);
-        console.log(
-          unit,
-          ethers.utils.parseEther((parseFloat(unit) * 0.05).toFixed(2))
-        );
-        await BuilderVault.fund(unit, {
-          value: ethers.utils.parseEther((parseFloat(unit) * 0.05).toFixed(2)),
-        });
-      }
-    }
+    await write();
+    // if (vaultContract) {
+    //   if (
+    //     typeof window !== "undefined" &&
+    //     typeof window.ethereum !== "undefined"
+    //   ) {
+    //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //     const signer = provider.getSigner();
+    //     const BuilderVault = new ethers.Contract(
+    //       vaultContract,
+    //       BuilderVaultImplABI,
+    //       signer
+    //     );
+    //     const unit = Math.ceil(fund / 0.05);
+    //     console.log(
+    //       unit,
+    //       ethers.utils.parseEther((parseFloat(unit) * 0.05).toFixed(2))
+    //     );
+    //     await BuilderVault.fund(unit, {
+    //       value: ethers.utils.parseEther((parseFloat(unit) * 0.05).toFixed(2)),
+    //     });
+    //   }
+    // }
   };
 
   const add = () => {
@@ -103,6 +227,7 @@ function Funding({ backers, vaultContract }) {
         padding: "24px",
       }}
     >
+      <Modal isOpenModal={isOpenModal} />
       <div
         style={{
           color: "var(--brown, #38493C)",
@@ -395,6 +520,27 @@ function Backers({ isFundingCompleted }) {
                   </td>
                   <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
                 </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">18</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">19</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
+                <tr class="border-b dark:border-neutral-500">
+                  <td class="whitespace-nowrap px-6 py-4 font-medium">20</td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -405,6 +551,30 @@ function Backers({ isFundingCompleted }) {
 }
 
 function Claim() {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const fundingConfig = {
+    totalAmount: "1000000000000000000",
+    deadline: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+    title: "Title1234",
+  };
+
+  const { config } = usePrepareContractWrite({
+    address: builderVaultFactoryAddress,
+    abi: builderVaultFactoryABI,
+    functionName: "deployVault",
+    args: [fundingConfig],
+  });
+  const { data, write } = useContractWrite(config);
+
+  const { isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
+  useEffect(() => {
+    setIsOpenModal(isSuccess);
+  }, [isSuccess]);
+
   return (
     <div
       style={{
@@ -421,6 +591,7 @@ function Claim() {
         padding: "24px",
       }}
     >
+      <ClaimModal isOpenModal={isOpenModal} />
       <div
         style={{
           color: "var(--brown, #38493C)",
@@ -455,7 +626,7 @@ function Claim() {
           borderRadius: "50px",
           border: "1px solid #38493C",
         }}
-        onClick={() => fundNow()}
+        onClick={() => write?.()}
       >
         Claim
       </button>
@@ -475,6 +646,7 @@ export default function Project() {
         minHeight: "100vh",
       }}
     >
+      <Modal />
       <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
         <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">
           Unleashing Dreams

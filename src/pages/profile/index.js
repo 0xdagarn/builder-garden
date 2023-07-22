@@ -12,6 +12,8 @@ import {
 
 import builderGardenABI from "../../../src/abis/BuilderGardenABI.json";
 const builderGardenAddress = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
+import builderVaultFactoryABI from "../../../src/abis/builderVaultFactoryABI.json";
+const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 
 const Modal = ({ isOpenModal, nickname, level, position }) => {
   return (
@@ -84,12 +86,34 @@ export default function Profile() {
   const [portfolio, setPortfolio] = useState("");
   const [level, setLevel] = useState("");
 
+  // const { config } = usePrepareContractWrite({
+  //   address: builderGardenAddress,
+  //   abi: builderGardenABI,
+  //   functionName: "builderSignUp",
+  //   args: [nickname],
+  //   enabled: Boolean(nickname),
+  // });
+  // const { data, write } = useContractWrite(config);
+
+  // const { isSuccess } = useWaitForTransaction({
+  //   hash: data?.hash,
+  // });
+
+  // useEffect(() => {
+  //   setIsOpenModal(isSuccess);
+  // }, [isSuccess]);
+
+  const fundingConfig = {
+    totalAmount: "1000000000000000000",
+    deadline: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+    title: "Title1234",
+  };
+
   const { config } = usePrepareContractWrite({
-    address: builderGardenAddress,
-    abi: builderGardenABI,
-    functionName: "builderSignUp",
-    args: [nickname],
-    enabled: Boolean(nickname),
+    address: builderVaultFactoryAddress,
+    abi: builderVaultFactoryABI,
+    functionName: "deployVault",
+    args: [fundingConfig],
   });
   const { data, write } = useContractWrite(config);
 
@@ -102,21 +126,21 @@ export default function Profile() {
   }, [isSuccess]);
 
   const create = async () => {
-    const user = {
-      nickName: nickname,
-      walletAddress: address,
-      userType: position,
-      role: role,
-      interest: [interesting],
-      socials: {
-        twitter,
-        discord,
-      },
-      pow: {
-        github,
-        portfolio,
-      },
-    };
+    // const user = {
+    //   nickName: nickname,
+    //   walletAddress: address,
+    //   userType: position,
+    //   role: role,
+    //   interest: [interesting],
+    //   socials: {
+    //     twitter,
+    //     discord,
+    //   },
+    //   pow: {
+    //     github,
+    //     portfolio,
+    //   },
+    // };
 
     // try {
     //   await axios.post("http://100.26.178.122:3001/user/", user);
@@ -124,8 +148,8 @@ export default function Profile() {
     //   console.log("server error: ", err);
     // }
 
-    // await write();
-    setIsOpenModal(true);
+    await write();
+    // setIsOpenModal(true);
   };
 
   return (

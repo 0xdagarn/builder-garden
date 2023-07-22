@@ -26,19 +26,18 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="p-4 flex items-center justify-center flex-col">
-                    <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
+                    <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mt-4">
                       Congratulations!
                     </div>
-                    <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug">
+                    <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mt-4 mb-16">
                       Your first crowdfunding round has been created!
                     </div>
-
                     <div className="flex items-center justify-center">
                       <button
                         className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
-                        onClick={() => Router.replace("./profile")}
+                        onClick={() => Router.replace("./projects/0")}
                       >
-                        Go to the detail page
+                        Go to detail page
                       </button>
                     </div>
                   </div>
@@ -75,13 +74,13 @@ export default function Project() {
     hash: data?.hash,
   });
 
-  const create = async () => {
-    await write();
-  };
-
   useEffect(() => {
     setIsOpenModal(isSuccess);
   }, [isSuccess]);
+
+  const create = async () => {
+    await write();
+  };
 
   return (
     <div
@@ -91,7 +90,7 @@ export default function Project() {
         minHeight: "100vh",
       }}
     >
-      <Modal />
+      <Modal isOpenModal={isOpenModal} />
 
       <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
         <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9 mb-4">

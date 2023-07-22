@@ -655,7 +655,7 @@ export default function Inventory() {
             </div>
           </div>
           <div style={{ flex: 1.5 }}>
-            <div>
+            <div className="mt-28">
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2 my-6">
                 Tokens
               </div>
@@ -688,7 +688,7 @@ export default function Inventory() {
                 disabled
               />
             </div>
-            <div className="mt-44">
+            <div className="mt-20">
               <div>
                 <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
                   My Project

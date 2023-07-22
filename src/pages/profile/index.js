@@ -12,6 +12,8 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+import { signMessage } from "@wagmi/core";
+
 import {
   SismoConnectButton, // the Sismo Connect React button displayed below
   SismoConnectConfig,

@@ -437,6 +437,52 @@ export default function Profile() {
         </div>
 
         <div className="flex justify-between">
+          <div className="flex-1 ml-[80px]">
+            <div className="flex items-center h-[60px]">
+              <Image src="/sismo.png" width={50} height={250} alt="..." />
+              <span className="ml-[10px] text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
+                Proof of Humanity
+              </span>
+            </div>
+            <div className="flex gap-10 mt-[10px]">
+              <div className="flex-1">
+                <div>
+                  <SismoConnectButton
+                    config={{
+                      appId: "0xf4977993e52606cfd67b7a1cde717069",
+                    }}
+                    auths={[
+                      { authType: AuthType.TWITTER },
+                      { authType: AuthType.GITHUB },
+                    ]}
+                    claims={[
+                      {
+                        groupId: "0x75aa8f89327696bc722015973e6202aa",
+                        value: 15,
+                      },
+                      {
+                        groupId: "0x682544d549b8a461d7fe3e589846bb7b",
+                        isOptional: true,
+                      },
+                    ]}
+                    onResponseBytes={(responseBytes) => {
+                      setResponseBytes(responseBytes);
+                    }}
+                    text={"Prove Your Humanity with Sismo"}
+                    disabled={true}
+                  />
+                  {responseBytes != "" && (
+                    <span className="text-[#38493C]">
+                      Proof generated successfully. <br />
+                      Click the button below to create your ERC-6551 Account!
+                      <br />
+                      Proof will verified in our contract.
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="flex-1">
             <div className="flex items-center h-[60px] ">
               <Image src="/XID.png" width={70} height={250} alt="..." />
@@ -490,52 +536,6 @@ export default function Profile() {
                   </div>
                 </div>
               )}
-            </div>
-          </div>
-          <div className="flex-1 ml-[80px]">
-            <div className="flex items-center h-[60px]">
-              <Image src="/sismo.png" width={50} height={250} alt="..." />
-              <span className="ml-[10px] text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
-                Proof of Humanity
-              </span>
-            </div>
-            <div className="flex gap-10 mt-[10px]">
-              <div className="flex-1">
-                <div>
-                  <SismoConnectButton
-                    config={{
-                      appId: "0xf4977993e52606cfd67b7a1cde717069",
-                    }}
-                    auths={[
-                      { authType: AuthType.TWITTER },
-                      { authType: AuthType.GITHUB },
-                    ]}
-                    claims={[
-                      {
-                        groupId: "0x75aa8f89327696bc722015973e6202aa",
-                        value: 15,
-                      },
-                      {
-                        groupId: "0x682544d549b8a461d7fe3e589846bb7b",
-                        isOptional: true,
-                      },
-                    ]}
-                    onResponseBytes={(responseBytes) => {
-                      setResponseBytes(responseBytes);
-                    }}
-                    text={"Prove Your Humanity with Sismo"}
-                    disabled={true}
-                  />
-                  {responseBytes != "" && (
-                    <span className="text-[#38493C]">
-                      Proof generated successfully. <br />
-                      Click the button below to create your ERC-6551 Account!
-                      <br />
-                      Proof will verified in our contract.
-                    </span>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
         </div>

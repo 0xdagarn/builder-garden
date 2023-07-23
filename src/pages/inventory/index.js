@@ -93,43 +93,48 @@ function Backers({ isFundingCompleted }) {
               <tbody>
                 <tr class="border-b dark:border-neutral-500">
                   <td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
-                  <td class="whitespace-nowrap px-6 py-4">
+                  <td
+                    class="whitespace-nowrap px-6 py-4 cursor-pointer"
+                    onClick={() => Router.replace("/backer")}
+                  >
                     0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
                   </td>
                   <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
                 </tr>
                 <tr class="border-b dark:border-neutral-500">
                   <td class="whitespace-nowrap px-6 py-4 font-medium">2</td>
-                  <td class="whitespace-nowrap px-6 py-4">
+                  <td
+                    class="whitespace-nowrap px-6 py-4 cursor-pointer"
+                    onClick={() => Router.replace("/backer")}
+                  >
                     0x9e5581730DAC59918487D862540e3654fA2C6F8C
                   </td>
                   <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
                 </tr>
                 <tr class="border-b dark:border-neutral-500">
                   <td class="whitespace-nowrap px-6 py-4 font-medium">3</td>
-                  <td class="whitespace-nowrap px-6 py-4">
+                  <td
+                    class="whitespace-nowrap px-6 py-4 cursor-pointer"
+                    onClick={() => Router.replace("/backer")}
+                  >
                     0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
                   </td>
                   <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
                 </tr>
                 <tr class="border-b dark:border-neutral-500">
                   <td class="whitespace-nowrap px-6 py-4 font-medium">4</td>
-                  <td class="whitespace-nowrap px-6 py-4">
+                  <td
+                    class="whitespace-nowrap px-6 py-4 cursor-pointer"
+                    onClick={() => Router.replace("/backer")}
+                  >
                     0x9e5581730DAC59918487D862540e3654fA2C6F8C
                   </td>
                   <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
                 </tr>
                 <tr class="border-b dark:border-neutral-500">
                   <td class="whitespace-nowrap px-6 py-4 font-medium">5</td>
-                  <td class="whitespace-nowrap px-6 py-4">
+                  <td class="whitespace-nowrap px-6 py-4" cursor-pointer>
                     0xaB69eeB3b759239dB2214eC8261a1D8B000cAE3c
-                  </td>
-                  <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
-                </tr>
-                <tr class="border-b dark:border-neutral-500">
-                  <td class="whitespace-nowrap px-6 py-4 font-medium">6</td>
-                  <td class="whitespace-nowrap px-6 py-4">
-                    0x9e5581730DAC59918487D862540e3654fA2C6F8C
                   </td>
                   <td class="whitespace-nowrap px-6 py-4">0.05 ETH</td>
                 </tr>

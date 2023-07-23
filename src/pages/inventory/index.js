@@ -701,10 +701,72 @@ export default function Inventory() {
                   buildergarden.lens
                 </Link>
               </div>
-              <div className="flex">
-                <Image src="/poap.png" width={45} height={45} alt="poap" />
+              <div className="flex gap-x-[10px]">
+                <Image
+                  src="/poap.png"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                  className="mr-[8px]"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/145286/original_image.png"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/128312/original_image.aaf"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/143341/original_image.aaf"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/145280/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/124804/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/117921/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/105558/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/58080/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
               </div>
-              <div className="flex"></div>
+              <div className=" self-end flex items-center">
+                <span>Import from</span>
+                <Image
+                  src="/airstack.png"
+                  width={25}
+                  height={25}
+                  alt="airstack"
+                />
+              </div>
             </div>
             <div className="mt-44">
               <div>

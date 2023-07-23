@@ -12,9 +12,9 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import { EmbedSDK } from "@pushprotocol/uiembed";
 import BuilderVaultImplABI from "../abis/BuilderVaultImplABI.json";
-const builderGardenContract = "0xcB72D04FC09e973282dBC5902C3018AA4AB19f44";
+const builderGardenContract = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
 import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
-const builderVaultFactoryAddress = "0xC064a24b593caE22B936Eb9dc59296112e873456";
+const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 
 const Modal = ({ isOpenModal, nickname, level, position }) => {
   return (
@@ -155,23 +155,11 @@ function Funding({ backers, vaultContract, setIsModal }) {
   const [fund, setFund] = useState(0.05);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  // const fundingConfig = {
-  //   totalAmount: "1000000000000000000",
-  //   deadline: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
-  //   title: "Title1234",
-  // };
-
-  // const { config } = usePrepareContractWrite({
-  //   address: builderVaultFactoryAddress,
-  //   abi: builderVaultFactoryABI,
-  //   functionName: "deployVault",
-  //   args: [fundingConfig],
-  // });
-  // const { data, write } = useContractWrite(config);
-
-  // const { isSuccess } = useWaitForTransaction({
-  //   hash: data?.hash,
-  // });
+  const fundingConfig = {
+    totalAmount: "1000000000000000000",
+    deadline: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+    title: "Title1234",
+  };
 
   const { config } = usePrepareContractWrite({
     address: builderVaultFactoryAddress,
@@ -184,6 +172,18 @@ function Funding({ backers, vaultContract, setIsModal }) {
   const { isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
+
+  // const { config } = usePrepareContractWrite({
+  //   address: builderVaultFactoryAddress,
+  //   abi: builderVaultFactoryABI,
+  //   functionName: "deployVault",
+  //   args: [fundingConfig],
+  // });
+  // const { data, write } = useContractWrite(config);
+
+  // const { isSuccess } = useWaitForTransaction({
+  //   hash: data?.hash,
+  // });
 
   useEffect(() => {
     setIsOpenModal(isSuccess);

@@ -1,8 +1,9 @@
+import Link from "@mui/material/Link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Router from "next/router";
 import { useRouter } from "next/router";
-import Link from "@mui/material/Link";
+
 import { useAccount } from "wagmi";
 import {
   usePrepareContractWrite,
@@ -11,9 +12,9 @@ import {
 } from "wagmi";
 
 import builderGardenABI from "../abis/BuilderGardenABI.json";
-const builderGardenAddress = "0xcB72D04FC09e973282dBC5902C3018AA4AB19f44";
+const builderGardenAddress = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
 import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
-const builderVaultFactoryAddress = "0xC064a24b593caE22B936Eb9dc59296112e873456";
+const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 
 const Modal = ({ isOpenModal, close }) => {
   return (
@@ -577,12 +578,15 @@ export default function Inventory() {
     >
       <Modal isOpenModal={isOpenModal} close={() => setIsOpenModal(false)} />
       <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
-        <div className="flex ">
+        <div className="flex gap-12">
+          {/* <div>
+            <Image src="/verified.png" width={80} height={250} alt="..." />
+          </div> */}
           <div style={{ flex: 1 }}>
             <Profile step={step} />
             <div className="flex justify-center items-center flex-col">
               <div
-                className="flex justify-center items-center mt-16"
+                className="flex justify-center items-center mt-44"
                 style={{
                   height: "72px",
                   width: "72px",
@@ -651,16 +655,25 @@ export default function Inventory() {
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-          <div className="ml-12" style={{ flex: 1.5 }}>
-            <div>
-=======
           <div style={{ flex: 1.5 }}>
-            <div className="mt-28">
->>>>>>> origin/main
+            <div className="mt-18">
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2 my-6">
                 Tokens
               </div>
+              <label
+                htmlFor="hacakthon"
+                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+              >
+                ECR6551 Wallet
+              </label>
+              <input
+                type="text"
+                id="hacakthon"
+                className="mb-4 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                value="0xAaF22F9533683A1e6D259333aff5ffA5C684bC0E"
+                disabled
+              />
               <label
                 htmlFor="hacakthon"
                 className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
@@ -773,7 +786,7 @@ export default function Inventory() {
                 />
               </div>
             </div>
-            <div className="mt-44">
+            <div className="mt-10">
               <div>
                 <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
                   My Project

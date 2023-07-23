@@ -1,8 +1,9 @@
+import Link from "@mui/material/Link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Router from "next/router";
 import { useRouter } from "next/router";
-import Link from "@mui/material/Link";
+
 import { useAccount } from "wagmi";
 import {
   usePrepareContractWrite,
@@ -577,12 +578,15 @@ export default function Inventory() {
     >
       <Modal isOpenModal={isOpenModal} close={() => setIsOpenModal(false)} />
       <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
-        <div className="flex ">
+        <div className="flex gap-12">
+          {/* <div>
+            <Image src="/verified.png" width={80} height={250} alt="..." />
+          </div> */}
           <div style={{ flex: 1 }}>
             <Profile step={step} />
             <div className="flex justify-center items-center flex-col">
               <div
-                className="flex justify-center items-center mt-16"
+                className="flex justify-center items-center mt-44"
                 style={{
                   height: "72px",
                   width: "72px",
@@ -651,11 +655,8 @@ export default function Inventory() {
               </div>
             </div>
           </div>
-          {/* <div className="ml-12" style={{ flex: 1.5 }}>
-            <div> */}
           <div style={{ flex: 1.5 }}>
             <div className="mt-18">
-            <div className="mt-28">
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2 my-6">
                 Tokens
               </div>
@@ -785,7 +786,7 @@ export default function Inventory() {
                 />
               </div>
             </div>
-            <div className="mt-44">
+            <div className="mt-10">
               <div>
                 <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
                   My Project

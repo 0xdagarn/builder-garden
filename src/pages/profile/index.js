@@ -480,7 +480,7 @@ export default function Profile() {
                   </>
                 )}
               </div>
-              {JSON.stringify(signature[1]) === "" ?? (
+              {signature[0] != "" && (
                 <div className="flex flex-col break-all">
                   <span>Twitter</span>
                   <div className="break-all">{signature[0]}</div>

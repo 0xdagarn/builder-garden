@@ -11,9 +11,9 @@ import {
 } from "wagmi";
 
 import builderGardenABI from "../abis/BuilderGardenABI.json";
-const builderGardenAddress = "0xcB72D04FC09e973282dBC5902C3018AA4AB19f44";
+const builderGardenAddress = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
 import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
-const builderVaultFactoryAddress = "0xC064a24b593caE22B936Eb9dc59296112e873456";
+const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 
 const Modal = ({ isOpenModal, close }) => {
   return (
@@ -655,10 +655,24 @@ export default function Inventory() {
             </div>
           </div>
           <div style={{ flex: 1.5 }}>
-            <div className="mt-28">
+            <div className="mt-18">
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2 my-6">
                 Tokens
               </div>
+              <label
+                htmlFor="hacakthon"
+                className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
+              >
+                ECR6551 Wallet
+              </label>
+              <input
+                type="text"
+                id="hacakthon"
+                className="mb-4 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                value="0xAaF22F9533683A1e6D259333aff5ffA5C684bC0E"
+                disabled
+              />
               <label
                 htmlFor="hacakthon"
                 className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"

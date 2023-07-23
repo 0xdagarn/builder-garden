@@ -7,7 +7,7 @@ import {
 import Router from "next/router";
 
 import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
-const builderVaultFactoryAddress = "0xC064a24b593caE22B936Eb9dc59296112e873456";
+const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 
 const Modal = ({ isOpenModal, nickname, level, position }) => {
   return (
@@ -98,7 +98,7 @@ export default function Project() {
         </div>
 
         <label
-          htmlFor="hacakthon"
+          htmlFor="hackathon"
           className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
         >
           Hackathon
@@ -115,7 +115,7 @@ export default function Project() {
           htmlFor="max"
           className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
         >
-          Max Amount
+          Target Fundraising Amount
         </label>
         <input
           type="text"

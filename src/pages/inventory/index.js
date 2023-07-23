@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Router from "next/router";
 import { useRouter } from "next/router";
-
+import Link from "@mui/material/Link";
 import { useAccount } from "wagmi";
 import {
   usePrepareContractWrite,
@@ -577,10 +577,7 @@ export default function Inventory() {
     >
       <Modal isOpenModal={isOpenModal} close={() => setIsOpenModal(false)} />
       <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
-        <div className="flex gap-12">
-          <div>
-            <Image src="/verified.png" width={80} height={250} alt="..." />
-          </div>
+        <div className="flex ">
           <div style={{ flex: 1 }}>
             <Profile step={step} />
             <div className="flex justify-center items-center flex-col">
@@ -654,8 +651,11 @@ export default function Inventory() {
               </div>
             </div>
           </div>
+          {/* <div className="ml-12" style={{ flex: 1.5 }}>
+            <div> */}
           <div style={{ flex: 1.5 }}>
             <div className="mt-18">
+            <div className="mt-28">
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2 my-6">
                 Tokens
               </div>
@@ -702,7 +702,90 @@ export default function Inventory() {
                 disabled
               />
             </div>
-            <div className="mt-20">
+            <div className="flex flex-col gap-y-2">
+              <div className="flex items-center gap-x-10">
+                <Image
+                  src="/lens.svg"
+                  width={40}
+                  height={40}
+                  alt="lens"
+                  className="ml-[3px]"
+                />
+                <Link
+                  href="https://www.lensfrens.xyz/buildergarden.lens"
+                  underline="hover"
+                >
+                  buildergarden.lens
+                </Link>
+              </div>
+              <div className="flex gap-x-[10px]">
+                <Image
+                  src="/poap.png"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                  className="mr-[8px]"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/145286/original_image.png"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/128312/original_image.aaf"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/143341/original_image.aaf"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/145280/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/124804/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/117921/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/105558/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+                <Image
+                  src="https://assets.airstack.xyz/image/poap/100/58080/original_image.gif"
+                  width={45}
+                  height={45}
+                  alt="poap"
+                />
+              </div>
+              <div className=" self-end flex items-center">
+                <span>Import from</span>
+                <Image
+                  src="/airstack.png"
+                  width={25}
+                  height={25}
+                  alt="airstack"
+                />
+              </div>
+            </div>
+            <div className="mt-44">
               <div>
                 <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2">
                   My Project

@@ -512,7 +512,7 @@ export default function Profile() {
                     ]}
                     claims={[
                       {
-                        groupId: "0x1cde61966decb8600dfd0749bd371f12",
+                        groupId: "0x75aa8f89327696bc722015973e6202aa",
                         value: 15,
                       },
                       {

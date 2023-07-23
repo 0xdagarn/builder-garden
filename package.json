@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.1",
+    "@pushprotocol/restapi": "^1.4.3",
     "@pushprotocol/uiembed": "^0.2.0",
     "@sismo-core/sismo-connect-react": "^0.0.20",
     "autoprefixer": "10.4.14",

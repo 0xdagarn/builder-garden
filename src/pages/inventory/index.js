@@ -11,9 +11,9 @@ import {
 } from "wagmi";
 
 import builderGardenABI from "../abis/BuilderGardenABI.json";
-const builderGardenAddress = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
+const builderGardenAddress = "0xcB72D04FC09e973282dBC5902C3018AA4AB19f44";
 import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
-const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
+const builderVaultFactoryAddress = "0xC064a24b593caE22B936Eb9dc59296112e873456";
 
 const Modal = ({ isOpenModal, close }) => {
   return (
@@ -319,9 +319,9 @@ function Profile({ step }) {
           marginTop: "8px",
         }}
       >
-        Alex
+        0xMoncha
       </div>
-      <div>Full stack developer</div>
+      <div>Developer</div>
       <div>LV {step >= 3 ? "2" : "1"}</div>
     </div>
   );
@@ -456,7 +456,7 @@ function Profile({ step }) {
 //                   lineHeight: "normal",
 //                 }}
 //               >
-//                 Alex
+//                 0xMoncha
 //               </div>
 //               <div
 //                 className="mt-1"
@@ -651,8 +651,13 @@ export default function Inventory() {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
           <div className="ml-12" style={{ flex: 1.5 }}>
             <div>
+=======
+          <div style={{ flex: 1.5 }}>
+            <div className="mt-28">
+>>>>>>> origin/main
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2 my-6">
                 Tokens
               </div>
@@ -674,14 +679,14 @@ export default function Inventory() {
                 htmlFor="hacakthon"
                 className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
               >
-                ALT
+                Builder Garden Token
               </label>
               <input
                 type="text"
                 id="hacakthon"
                 className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
-                value="20"
+                value="1"
                 disabled
               />
             </div>

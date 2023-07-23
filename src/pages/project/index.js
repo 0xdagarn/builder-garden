@@ -7,7 +7,7 @@ import {
 import Router from "next/router";
 
 import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
-const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
+const builderVaultFactoryAddress = "0xC064a24b593caE22B936Eb9dc59296112e873456";
 
 const Modal = ({ isOpenModal, nickname, level, position }) => {
   return (

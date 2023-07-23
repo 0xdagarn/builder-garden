@@ -134,7 +134,7 @@ function Project({ project, projectId }) {
                   lineHeight: "normal",
                 }}
               >
-                Alex
+                0xMoncha
               </div>
               <div
                 className="mt-1"

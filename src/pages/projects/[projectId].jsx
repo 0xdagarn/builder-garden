@@ -17,7 +17,7 @@ const builderGardenContract = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
 import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
 const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
 
-const Modal = ({ isOpenModal, nickname, level, position }) => {
+const Modal = ({ isOpenModal, setIsOpenModal, nickname, level, position }) => {
   return (
     <div>
       {isOpenModal && (
@@ -51,7 +51,11 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
                       Your funding has been successful!
                     </div>
                     <div className="flex items-center justify-center">
-                      <button className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white">
+                      <button
+                        className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
+                        onClick={() => setIsOpenModal(false)}
+                        // onClick={() => alert(1)}
+                      >
                         Got it!
                       </button>
                     </div>
@@ -66,7 +70,13 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
   );
 };
 
-const ClaimModal = ({ isOpenModal, nickname, level, position }) => {
+const ClaimModal = ({
+  isOpenModal,
+  setIsOpenModal,
+  nickname,
+  level,
+  position,
+}) => {
   return (
     <div>
       {isOpenModal && (
@@ -100,7 +110,10 @@ const ClaimModal = ({ isOpenModal, nickname, level, position }) => {
                       Your claim has been successful!
                     </div>
                     <div className="flex items-center justify-center">
-                      <button className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white">
+                      <button
+                        className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
+                        // onClick={() => setIsOpenModal(false)}
+                      >
                         Got it!
                       </button>
                     </div>
@@ -143,6 +156,8 @@ function Profile() {
           lineHeight: "normal",
           marginTop: "8px",
         }}
+        className="cursor-pointer"
+        onClick={() => Router.replace("/inventory")}
       >
         0xMoncha
       </div>
@@ -155,6 +170,7 @@ function Profile() {
 function Funding({ backers, vaultContract, setIsModal }) {
   const [fund, setFund] = useState(0.05);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { address } = useAccount();
 
   const fundingConfig = {
     totalAmount: "1000000000000000000",
@@ -174,46 +190,12 @@ function Funding({ backers, vaultContract, setIsModal }) {
     hash: data?.hash,
   });
 
-  // const { config } = usePrepareContractWrite({
-  //   address: builderVaultFactoryAddress,
-  //   abi: builderVaultFactoryABI,
-  //   functionName: "deployVault",
-  //   args: [fundingConfig],
-  // });
-  // const { data, write } = useContractWrite(config);
-
-  // const { isSuccess } = useWaitForTransaction({
-  //   hash: data?.hash,
-  // });
-
   useEffect(() => {
-    setIsOpenModal(isSuccess);
+    if (isSuccess) setIsOpenModal(isSuccess);
   }, [isSuccess]);
 
   const fundNow = async () => {
     await write();
-    // if (vaultContract) {
-    //   if (
-    //     typeof window !== "undefined" &&
-    //     typeof window.ethereum !== "undefined"
-    //   ) {
-    //     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    //     const signer = provider.getSigner();
-    //     const BuilderVault = new ethers.Contract(
-    //       vaultContract,
-    //       BuilderVaultImplABI,
-    //       signer
-    //     );
-    //     const unit = Math.ceil(fund / 0.05);
-    //     console.log(
-    //       unit,
-    //       ethers.utils.parseEther((parseFloat(unit) * 0.05).toFixed(2))
-    //     );
-    //     await BuilderVault.fund(unit, {
-    //       value: ethers.utils.parseEther((parseFloat(unit) * 0.05).toFixed(2)),
-    //     });
-    //   }
-    // }
   };
 
   const add = () => {
@@ -225,112 +207,114 @@ function Funding({ backers, vaultContract, setIsModal }) {
     setFund((fund - 0.05).toFixed(2));
   };
   return (
-    <div
-      style={{
-        marginTop: "16px",
-        borderRadius: "28px",
-        background: "#f7ebe2",
-        boxShadow: "0px 8px 20px 0px rgba(0, 0, 0, 0.15)",
-        borderRadius: "28px",
-        border: "1px solid grey",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px",
-      }}
-    >
-      <Modal isOpenModal={isOpenModal} />
-      <div
-        style={{
-          color: "var(--brown, #38493C)",
-          fontFamily: "Grillmaster Wide",
-          fontSize: "24px",
-          fontStyle: "normal",
-          fontWeight: "900",
-          lineHeight: "normal",
-        }}
-      >
-        Participate Fund
-      </div>
-      <div
-        className="flex mt-4 mb-4"
-        style={{ alignItems: "center", justifyContent: "center" }}
-      >
-        <button
+    <div>
+      {address !== "0x501d30F946b61CCd1cee4182caeAa2af61580ee4" || (
+        <div
           style={{
-            color: "var(--brown, #38493C)",
-            textAlign: "center",
-            fontFamily: "Grillmaster Wide",
-            fontSize: "38px",
-            fontStyle: "normal",
-            fontWeight: "900",
-            lineHeight: "normal",
-            borderRadius: "20px",
-            border: "1px solid #CCDBD0",
-            padding: "10px 24px",
-          }}
-          onClick={() => sub()}
-        >
-          -
-        </button>
-        <span
-          style={{
-            color: "#38493C",
-            textAlign: "center",
-            fontFamily: "Grillmaster Wide",
-            fontSize: "28px",
-            fontStyle: "normal",
-            fontWeight: "900",
-            lineHeight: "normal",
-            paddingLeft: "24px",
-            paddingRight: "24px",
+            marginTop: "16px",
+            borderRadius: "28px",
+            background: "#f7ebe2",
+            boxShadow: "0px 8px 20px 0px rgba(0, 0, 0, 0.15)",
+            borderRadius: "28px",
+            border: "1px solid grey",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "24px",
           }}
         >
-          {fund} ETH
-        </span>
-        <button
-          style={{
-            color: "var(--brown, #38493C)",
-            textAlign: "center",
-            fontFamily: "Grillmaster Wide",
-            fontSize: "38px",
-            fontStyle: "normal",
-            fontWeight: "900",
-            lineHeight: "normal",
-            borderRadius: "20px",
-            border: "1px solid #CCDBD0",
-            padding: "10px 24px",
-          }}
-          onClick={() => add()}
-        >
-          +
-        </button>
-      </div>
-      <button
-        style={{
-          display: "flex",
-          height: "60px",
-          padding: "11px 24px",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "8px",
-          alignSelf: "stretch",
-          color: "#FFF",
-          textAlign: "center",
-          fontFamily: "Grillmaster Wide",
-          fontSize: "20px",
-          fontStyle: "normal",
-          fontWeight: "700",
-          lineHeight: "18px",
-          background: "#38493C",
-          borderRadius: "50px",
-        }}
-        onClick={() => fundNow()}
-      >
-        Fund Now
-      </button>
-      {/* <div
+          <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
+          <div
+            style={{
+              color: "var(--brown, #38493C)",
+              fontFamily: "Grillmaster Wide",
+              fontSize: "24px",
+              fontStyle: "normal",
+              fontWeight: "900",
+              lineHeight: "normal",
+            }}
+          >
+            Participate Fund
+          </div>
+          <div
+            className="flex mt-4 mb-4"
+            style={{ alignItems: "center", justifyContent: "center" }}
+          >
+            <button
+              style={{
+                color: "var(--brown, #38493C)",
+                textAlign: "center",
+                fontFamily: "Grillmaster Wide",
+                fontSize: "38px",
+                fontStyle: "normal",
+                fontWeight: "900",
+                lineHeight: "normal",
+                borderRadius: "20px",
+                border: "1px solid #CCDBD0",
+                padding: "10px 24px",
+              }}
+              onClick={() => sub()}
+            >
+              -
+            </button>
+            <span
+              style={{
+                color: "#38493C",
+                textAlign: "center",
+                fontFamily: "Grillmaster Wide",
+                fontSize: "28px",
+                fontStyle: "normal",
+                fontWeight: "900",
+                lineHeight: "normal",
+                paddingLeft: "24px",
+                paddingRight: "24px",
+              }}
+            >
+              {fund} ETH
+            </span>
+            <button
+              style={{
+                color: "var(--brown, #38493C)",
+                textAlign: "center",
+                fontFamily: "Grillmaster Wide",
+                fontSize: "38px",
+                fontStyle: "normal",
+                fontWeight: "900",
+                lineHeight: "normal",
+                borderRadius: "20px",
+                border: "1px solid #CCDBD0",
+                padding: "10px 24px",
+              }}
+              onClick={() => add()}
+            >
+              +
+            </button>
+          </div>
+          <button
+            style={{
+              display: "flex",
+              height: "60px",
+              padding: "11px 24px",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "8px",
+              alignSelf: "stretch",
+              color: "#FFF",
+              textAlign: "center",
+              fontFamily: "Grillmaster Wide",
+              fontSize: "20px",
+              fontStyle: "normal",
+              fontWeight: "700",
+              lineHeight: "18px",
+              background: "#38493C",
+              borderRadius: "50px",
+            }}
+            onClick={() => fundNow()}
+          >
+            Fund Now
+          </button>
+          {/* <div
         style={{
           width: "100%",
           marginTop: "16px",
@@ -380,6 +364,8 @@ function Funding({ backers, vaultContract, setIsModal }) {
           </div>
         </div>
       </div> */}
+        </div>
+      )}
     </div>
   );
 }
@@ -575,7 +561,7 @@ function Backers({ isFundingCompleted }) {
   );
 }
 
-function Claim() {
+function Claim({}) {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const fundingConfig = {
@@ -597,7 +583,8 @@ function Claim() {
   });
 
   useEffect(() => {
-    setIsOpenModal(isSuccess);
+    if (isSuccess) setIsOpenModal(isSuccess);
+    // if (isSuccess) alert("Fund is completed!");
   }, [isSuccess]);
 
   return (
@@ -616,7 +603,7 @@ function Claim() {
         padding: "24px",
       }}
     >
-      <ClaimModal isOpenModal={isOpenModal} />
+      <ClaimModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
       <div
         style={{
           color: "var(--brown, #38493C)",
@@ -820,14 +807,14 @@ export default function Project() {
               id="unit"
               className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required
-              value={`${projectId === "0" ? "0 / 1 ETH ♦️" : "1 / 1 ETH ♦️"}`}
+              value={`${projectId === "1" ? "0 / 1 ETH ♦️" : "1 / 1 ETH ♦️"}`}
               disabled
             />
-            {projectId === "1" ? <Backers /> : null}
+            {projectId === "0" ? <Backers /> : null}
           </div>
           <div className="flex-1 mt-2">
             <Profile />
-            {projectId === "0" ? <Funding /> : <Claim />}
+            {projectId === "1" ? <Funding /> : <Claim />}
           </div>
         </div>
       </div>

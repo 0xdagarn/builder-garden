@@ -324,6 +324,7 @@ function Profile({ step }) {
           lineHeight: "normal",
           marginTop: "8px",
         }}
+        className="cursor-pointer"
       >
         0xMoncha
       </div>
@@ -565,7 +566,7 @@ export default function Inventory() {
       setStep("3");
       setTimeout(() => {
         setStep("4");
-      }, 10000);
+      }, 15000);
     }
   }, [isSuccess]);
 
@@ -886,7 +887,7 @@ export default function Inventory() {
                       // onChange={(e) => setTitle(e.target.value)}
                     /> */}
                     <div
-                      className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white mt-4"
+                      className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white mt-4 cursor-pointer"
                       onClick={() => attest()}
                     >
                       Submit

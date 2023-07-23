@@ -133,6 +133,7 @@ function Project({ project, projectId }) {
                   fontWeight: "700",
                   lineHeight: "normal",
                 }}
+                className="cursor-pointer"
               >
                 0xMoncha
               </div>
@@ -274,7 +275,7 @@ export default function Home() {
       </div>
 
       <div className="mt-12 mb-36 flex flex-row gap-16">
-        <div className="flex-1">
+        <div className="flex-1 cursor-pointer">
           <Image
             src="/builder.png"
             width={200}
@@ -282,6 +283,21 @@ export default function Home() {
             alt="Picture of the author"
             onClick={() => Router.replace("/profile")}
           />
+          <div
+            style={{
+              marginTop: "8px",
+              color: "#38493C",
+              textAlign: "center",
+              fontFamily: "Grillmaster Wide",
+              fontSize: "18px",
+              fontStyle: "normal",
+              fontWeight: "900",
+              lineHeight: "120%",
+            }}
+            className="flex justify-center"
+          >
+            Create a Builder Profile
+          </div>
         </div>
         <div className="flex-1">
           <Image
@@ -290,6 +306,21 @@ export default function Home() {
             height={1400}
             alt="Picture of the author"
           />
+          <div
+            style={{
+              marginTop: "16px",
+              color: "#38493C",
+              textAlign: "center",
+              fontFamily: "Grillmaster Wide",
+              fontSize: "18px",
+              fontStyle: "normal",
+              fontWeight: "900",
+              lineHeight: "120%",
+            }}
+            className="flex justify-center"
+          >
+            Create a Builder Profile
+          </div>
         </div>
       </div>
 

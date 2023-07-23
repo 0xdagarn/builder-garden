@@ -35,7 +35,7 @@ const Modal = ({ isOpenModal, nickname, level, position }) => {
                     <div className="flex items-center justify-center">
                       <button
                         className="rounded-full text-center text-base font-bold leading-6 p-4 border-2 bg-green-800 text-white border-white"
-                        onClick={() => Router.replace("./projects/0")}
+                        onClick={() => Router.replace("./projects/1")}
                       >
                         Go to detail page
                       </button>

@@ -269,9 +269,6 @@ export default function Profile() {
         <div className="text-var-brown font-feature-settings-0 text-4xl font-extrabold leading-9">
           Create profile
         </div>
-        <div className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed">
-          {`Roles can't be changed in the current version`}
-        </div>
 
         <div className="flex gap-10 mt-4 mb-12">
           <div
@@ -356,14 +353,14 @@ export default function Profile() {
                 <option value="designer">Designer</option>
               </select>
               <div className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed">
-                Your interesting
+                Choose your interest
               </div>
               <select
                 id="small"
                 className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 onChange={(e) => setInteresting(e.target.value)}
               >
-                <option value="">Choose your interesting</option>
+                <option value="">Choose your interest</option>
                 <option value="Infrastructure">Infrastructure</option>
                 <option value="DeFi">DeFi</option>
                 <option value="NFT">NFT</option>
@@ -379,7 +376,7 @@ export default function Profile() {
                 htmlFor="discord"
                 className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
               >
-                Discord handle
+                Discord
               </label>
               <input
                 type="text"
@@ -387,14 +384,14 @@ export default function Profile() {
                 className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
                 onChange={(e) => setDiscord(e.target.value)}
-                placeholder="builder#1234"
+                placeholder="builder1234"
               />
               <div className="flex justify-between">
                 <label
                   htmlFor="twitter"
                   className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
                 >
-                  Twitter handle
+                  Twitter
                 </label>
                 <Image
                   src={isVerified ? "/checkAfter.png" : "/checkBefore.png"}
@@ -417,7 +414,7 @@ export default function Profile() {
                     htmlFor="github"
                     className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
                   >
-                    Github
+                    Github nickname
                   </label>
                   <Image
                     src={isVerified ? "/checkAfter.png" : "/checkBefore.png"}
@@ -483,12 +480,16 @@ export default function Profile() {
                   </>
                 )}
               </div>
-              <div className="flex flex-col break-all">
-                <span>Twitter</span>
-                <div className="break-all">{signature[0]}</div>
-                <span>Github</span>
-                <div className="break-all">{JSON.stringify(signature[1])}</div>
-              </div>
+              {JSON.stringify(signature[1]) === "" ?? (
+                <div className="flex flex-col break-all">
+                  <span>Twitter</span>
+                  <div className="break-all">{signature[0]}</div>
+                  <span>Github</span>
+                  <div className="break-all">
+                    {JSON.stringify(signature[1])}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="flex-1 ml-[80px]">

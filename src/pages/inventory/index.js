@@ -319,9 +319,9 @@ function Profile({ step }) {
           marginTop: "8px",
         }}
       >
-        Alex
+        0xMoncha
       </div>
-      <div>Full stack developer</div>
+      <div>Developer</div>
       <div>LV {step >= 3 ? "2" : "1"}</div>
     </div>
   );
@@ -456,7 +456,7 @@ function Profile({ step }) {
 //                   lineHeight: "normal",
 //                 }}
 //               >
-//                 Alex
+//                 0xMoncha
 //               </div>
 //               <div
 //                 className="mt-1"
@@ -677,14 +677,14 @@ export default function Inventory() {
                 htmlFor="hacakthon"
                 className="text-var-brown font-feature-settings-0 text-base font-normal leading-relaxed"
               >
-                ALT
+                Builder Garden Token
               </label>
               <input
                 type="text"
                 id="hacakthon"
                 className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
-                value="20"
+                value="1"
                 disabled
               />
             </div>

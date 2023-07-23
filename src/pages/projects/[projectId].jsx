@@ -143,9 +143,9 @@ function Profile() {
           marginTop: "8px",
         }}
       >
-        Alex
+        0xMoncha
       </div>
-      <div>Full stack developer</div>
+      <div>Developer</div>
       <div>LV 1</div>
     </div>
   );
@@ -155,11 +155,23 @@ function Funding({ backers, vaultContract, setIsModal }) {
   const [fund, setFund] = useState(0.05);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const fundingConfig = {
-    totalAmount: "1000000000000000000",
-    deadline: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
-    title: "Title1234",
-  };
+  // const fundingConfig = {
+  //   totalAmount: "1000000000000000000",
+  //   deadline: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+  //   title: "Title1234",
+  // };
+
+  // const { config } = usePrepareContractWrite({
+  //   address: builderVaultFactoryAddress,
+  //   abi: builderVaultFactoryABI,
+  //   functionName: "deployVault",
+  //   args: [fundingConfig],
+  // });
+  // const { data, write } = useContractWrite(config);
+
+  // const { isSuccess } = useWaitForTransaction({
+  //   hash: data?.hash,
+  // });
 
   const { config } = usePrepareContractWrite({
     address: builderVaultFactoryAddress,
@@ -712,7 +724,7 @@ export default function Project() {
               id="unit"
               className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
               required
-              value="Alex (0xb66ef21e98Df914409f5c638d6E3dAB8f093EB5A)"
+              value="0xMoncha (0xb66ef21e98Df914409f5c638d6E3dAB8f093EB5A)"
               disabled
             />
             <label
@@ -740,7 +752,7 @@ export default function Project() {
               id="unit"
               className="border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
               required
-              value="In a small town, Alex, a passionate programmer, loved blockchain technology, especially Ethereum. When they learned about an Ethereum hackathon in another city, they wanted to go, but they had limited funds. So, Alex started a crowdfunding campaign with a heartfelt narrative about their passion for Ethereum and blockchain technology. The blockchain community responded generously, and Alex reached their funding goal and went to the hackathon. There, Alex met brilliant minds, collaborated on various Ethereum projects, and caught the attention of industry experts and potential employers. Alex realized the power of community and collective support, and this experience transformed their dreams into reality. Today, Alex is a successful blockchain developer and an active member of the Ethereum community, inspiring countless others to chase their passions and believe in the power of community and collective dreams."
+              value="In a small town, 0xMoncha, a passionate programmer, loved blockchain technology, especially Ethereum. When they learned about an Ethereum hackathon in another city, they wanted to go, but they had limited funds. So, 0xMoncha started a crowdfunding campaign with a heartfelt narrative about their passion for Ethereum and blockchain technology. The blockchain community responded generously, and 0xMoncha reached their funding goal and went to the hackathon. There, 0xMoncha met brilliant minds, collaborated on various Ethereum projects, and caught the attention of industry experts and potential employers. 0xMoncha realized the power of community and collective support, and this experience transformed their dreams into reality. Today, 0xMoncha is a successful blockchain developer and an active member of the Ethereum community, inspiring countless others to chase their passions and believe in the power of community and collective dreams."
               disabled
             />
             <label

@@ -11,9 +11,9 @@ import {
 } from "wagmi";
 
 import builderGardenABI from "../abis/BuilderGardenABI.json";
-const builderGardenAddress = "0x345d7C0c8564F44484456a2933eF23B8027a5919";
+const builderGardenAddress = "0xcB72D04FC09e973282dBC5902C3018AA4AB19f44";
 import builderVaultFactoryABI from "../abis/BuilderVaultFactoryABI.json";
-const builderVaultFactoryAddress = "0xfFeF6415C437725820CfaDE5E857d0eF15D0c40b";
+const builderVaultFactoryAddress = "0xC064a24b593caE22B936Eb9dc59296112e873456";
 
 const Modal = ({ isOpenModal, close }) => {
   return (

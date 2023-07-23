@@ -211,7 +211,7 @@ export default function Profile() {
       Buffer.from(resTwit.data.sign_payload),
       Buffer.from(privkeyHex, "hex")
     ).then((sig) => sig.toString("base64"));
-    const twit = `🎭 Verify @SeungAnJung with @NextDotID.
+    const twit = `🎭 Verify @${twitter} with @NextDotID.
     Sig: ${signatureTwit}}`;
 
     setNextIdKey([pubkeyHex, privkeyHex]);
@@ -483,12 +483,16 @@ export default function Profile() {
                   </>
                 )}
               </div>
-              <div className="flex flex-col break-all">
-                <span>Twitter</span>
-                <div className="break-all">{signature[0]}</div>
-                <span>Github</span>
-                <div className="break-all">{JSON.stringify(signature[1])}</div>
-              </div>
+              {signature[0] != "" && (
+                <div className="flex flex-col break-all">
+                  <span>Twitter</span>
+                  <div className="break-all">{signature[0]}</div>
+                  <span>Github</span>
+                  <div className="break-all">
+                    {JSON.stringify(signature[1])}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="flex-1 ml-[80px]">
@@ -511,7 +515,7 @@ export default function Profile() {
                     ]}
                     claims={[
                       {
-                        groupId: "0x1cde61966decb8600dfd0749bd371f12",
+                        groupId: "0x75aa8f89327696bc722015973e6202aa",
                         value: 15,
                       },
                       {

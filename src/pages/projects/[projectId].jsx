@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { readContract, readContracts } from "@wagmi/core";
-
+import * as PushAPI from "@pushprotocol/restapi";
 import {
   usePrepareContractWrite,
   useContractWrite,
@@ -640,6 +640,14 @@ export default function Project() {
 
   const { address, isConnected } = useAccount();
 
+  const getFeed = async () => {
+    const res = await PushAPI.user.getFeeds({
+      user: "eip155:5:0xA29B144A449E414A472c60C7AAf1aaFfE329021D", // user address in CAIP
+      env: "staging",
+    });
+    console.log("here", res);
+  };
+
   useEffect(() => {
     if (address) {
       console.log("here", address);
@@ -669,7 +677,36 @@ export default function Project() {
     return () => {
       EmbedSDK.cleanup();
     };
-  }, []);
+  }, [address]);
+
+  // useEffect(() => {
+  //   if (address) {
+  //     EmbedSDK.init({
+  //       headerText: "Hello DeFi", // optional
+  //       targetID: "sdk-trigger-id", // mandatory
+  //       appName: "FundMe", // mandatory
+  //       user: address, // mandatory
+  //       chainId: 5, // mandatory
+  //       viewOptions: {
+  //         type: "sidebar", // optional [default: 'sidebar', 'modal']
+  //         showUnreadIndicator: true, // optional
+  //         unreadIndicatorColor: "#cc1919",
+  //         unreadIndicatorPosition: "top-right",
+  //       },
+  //       theme: "light",
+  //       onOpen: () => {
+  //         console.log("-> client dApp onOpen callback");
+  //       },
+  //       onClose: () => {
+  //         console.log("-> client dApp onClose callback");
+  //       },
+  //     });
+  //   }
+
+  //   return () => {
+  //     EmbedSDK.cleanup();
+  //   };
+  // }, [address]);
 
   return (
     <div
@@ -693,6 +730,10 @@ export default function Project() {
               height={40}
             />
           </button>
+          <div
+            className="h-[50px] w-[50px] border-2"
+            onClick={() => getFeed()}
+          ></div>
         </div>
 
         <div className="flex gap-12">

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Router from "next/router";
 import { useRouter } from "next/router";
-
+import Link from "@mui/material/Link";
 import { useAccount } from "wagmi";
 import {
   usePrepareContractWrite,
@@ -577,10 +577,7 @@ export default function Inventory() {
     >
       <Modal isOpenModal={isOpenModal} close={() => setIsOpenModal(false)} />
       <div className="flex justify-center max-w-5xl flex-col mx-auto rounded-xl">
-        <div className="flex gap-12">
-          <div>
-            <Image src="/verified.png" width={80} height={250} alt="..." />
-          </div>
+        <div className="flex ">
           <div style={{ flex: 1 }}>
             <Profile step={step} />
             <div className="flex justify-center items-center flex-col">
@@ -654,7 +651,7 @@ export default function Inventory() {
               </div>
             </div>
           </div>
-          <div style={{ flex: 1.5 }}>
+          <div className="ml-12" style={{ flex: 1.5 }}>
             <div>
               <div className="text-var-brown font-feature-settings-0 text-xl font-extrabold leading-snug mb-2 my-6">
                 Tokens
@@ -687,6 +684,27 @@ export default function Inventory() {
                 value="20"
                 disabled
               />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <div className="flex items-center gap-x-10">
+                <Image
+                  src="/lens.svg"
+                  width={40}
+                  height={40}
+                  alt="lens"
+                  className="ml-[3px]"
+                />
+                <Link
+                  href="https://www.lensfrens.xyz/buildergarden.lens"
+                  underline="hover"
+                >
+                  buildergarden.lens
+                </Link>
+              </div>
+              <div className="flex">
+                <Image src="/poap.png" width={45} height={45} alt="poap" />
+              </div>
+              <div className="flex"></div>
             </div>
             <div className="mt-44">
               <div>
